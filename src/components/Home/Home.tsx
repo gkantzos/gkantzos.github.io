@@ -41,7 +41,6 @@ const Home: React.FC = () => {
         </p>
         <button className={styles.bookingButton}>Book a Ticket</button>
       </div>
-
       <div className={styles.capacityPanel}>
         <div className={styles.capacityCard}>
           <h2>Star Avenue</h2>
