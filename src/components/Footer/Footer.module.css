@@ -1,0 +1,58 @@
+.footer {
+  background: #111;
+  color: #bbb;
+  padding: 40px 20px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.footer h2 {
+  color: #00bcd4;
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.locations, .contact {
+  max-width: 280px;
+}
+
+.contact {
+  margin-right: 80px;
+}
+.locations p,
+.contact p {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-size: 1.8rem;
+}
+
+.socials a {
+  color: #00bcd4;
+  transition: color 0.3s ease;
+}
+
+.socials a:hover {
+  color: #862c2c;
+}
+
+.copy {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: -25px;
+  font-size: 0.9rem;
+  color: #666;
+  
+}

@@ -1,0 +1,106 @@
+.sidebar {
+  width: 220px;
+  
+  background: linear-gradient(180deg, #121212 0%, #1f1f1f 100%);
+  padding: 0px 20px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 40px;
+  margin-top: -30px; 
+}
+
+.logo:hover {
+  color: #041a1d;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.navList li {
+  margin-bottom: 25px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navLink:hover {
+  background-color: #00bcd4;
+  color: #121212;
+}
+
+.icon {
+  fill: #00bcd4;
+  width: 26px;
+  height: 26px;
+  margin-right: 12px;
+  transition: fill 0.3s ease;
+}
+
+.navLink:hover .icon {
+  fill: #26c6da;
+}
+
+.logoImage {
+  width: 230px;
+  height: auto;
+  display: block;
+  margin: 1 auto;
+  padding: 0px;
+  line-height: 1;
+  margin-bottom: -40px;
+}
+
+.logoSubtitle {
+  background: linear-gradient(90deg, #b22222, #ff4d4d, #a00000);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  margin-top: -25px;
+  padding: 0;
+  line-height: 1;
+  
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+
+.active .navLink {
+  background-color: #00bcd4;
+  color: #000000;
+  font-weight: bold;
+}
+
+.active .icon {
+  fill: #26c6da;
+}
