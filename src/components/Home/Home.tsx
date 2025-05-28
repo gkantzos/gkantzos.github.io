@@ -39,7 +39,11 @@ const Home: React.FC = () => {
         <p>
           Experience the ultimate cinematic journey with premium Dolby Atmos sound and 8K screenings. MovieTime Cinemas offer you the comfort, quality, and entertainment you truly deserve.
         </p>
-        <button className={styles.bookingButton}>Book a Ticket</button>
+        <button className={styles.bookingButton}
+        onClick={()=> navigate('/movies')}
+        >
+        Book a Ticket
+        </button>
       </div>
       <div className={styles.capacityPanel}>
         <div className={styles.capacityCard}>
@@ -75,7 +79,7 @@ const Home: React.FC = () => {
           (activeTab === 'upcoming' && numMoviesToShow < upcomingMovies.length)) && (
           <div className={styles.showMoreContainer}>
             <button onClick={handleShowMore} className={styles.showMoreButton}>
-              Εμφάνιση περισσότερων
+              LOAD MORE...
             </button>
           </div>
         )}

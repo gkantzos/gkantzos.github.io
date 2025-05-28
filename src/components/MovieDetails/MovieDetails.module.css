@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.leftColumn {
+  flex: 0 0 450px;
+}
+
+.leftColumn img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+}
+
+.leftColumn h2 {
+  margin-left: 110px;
+  margin-top: 1px;
+  font-size: 30px;
+  color: #ffffff;
+  
+}
+
+.rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.rightColumn h3 {
+  font-size: 24px;
+  color: #00bcd4;
+  margin: 0;
+}
+
+.rightColumn p {
+  line-height: 1.6;
+  margin: 0;
+  color: #f1f1f1;
+}
+
+.rightColumn strong {
+  color: #ff5252;
+}
+
+.trailer {
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  margin-top: 15px;
+}

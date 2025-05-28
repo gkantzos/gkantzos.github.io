@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPopularMovies } from '../../api';
 import Cards from '../Cards/Cards';
+import styles from './Movies.module.css';
 
 interface Movie {
   id: number;
@@ -39,13 +40,10 @@ const Movies: React.FC = () => {
   useEffect(() => {
     fetchPopularMovies()
       .then((data: any) => {
-        console.log('API response:', data);
         if (!data.results || data.results.length === 0) {
-          console.error("No results in API response");
           setMovies([]);
           return;
         }
-
         const adaptedMovies = data.results.map((movie: any) => ({
           id: movie.id,
           title: movie.title,
@@ -54,11 +52,10 @@ const Movies: React.FC = () => {
           release_date: movie.release_date,
           genre_names: movie.genre_ids ? movie.genre_ids.map((id: number) => genreMap[id] || 'Unknown') : [],
         }));
-
         setMovies(adaptedMovies);
       })
-      .catch((error: any) => {
-        console.error('Error fetching movies:', error);
+      .catch(() => {
+        setMovies([]);
       });
   }, []);
 
@@ -67,20 +64,19 @@ const Movies: React.FC = () => {
   };
 
   return (
-    <section className="background">
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1>Popular Movies</h1>
-        <p>Browse through the trending titles currently playing in cinemas.</p>
+    <section className={styles.background}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Popular movies</h1>
+        <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>
       </div>
 
       <div>
         {movies.length > 0 ? (
           <Cards movies={movies} onCardClick={handleCardClick} />
         ) : (
-          <div style={{ textAlign: 'center' }}>No movies available</div>
+          <div className={styles.noMovies}>No movies available</div>
         )}
       </div>
-  
     </section>
   );
 };

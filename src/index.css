@@ -18,11 +18,11 @@ code {
   display: flex;
 }
 
-.background{
-display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 40px 20px;
+.background {
+  position: relative;
+  min-height: 100vh;
+  height: auto;
+  overflow: visible;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #eee;
   background: 
@@ -30,7 +30,23 @@ display: flex;
     radial-gradient(ellipse at bottom right, rgba(134, 44, 44, 0.3) 0%, transparent 50%),
     radial-gradient(circle at center, rgba(0, 188, 212, 0.1) 0%, transparent 70%),
     linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+
+.stareffect {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.3); }
 }
