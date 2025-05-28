@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/MovieSite/static/css/main.91e9fe85.css",
-    "main.js": "/MovieSite/static/js/main.b864ee47.js",
-    "static/js/453.15010aa8.chunk.js": "/MovieSite/static/js/453.15010aa8.chunk.js",
-    "static/media/moviesite logo.png": "/MovieSite/static/media/moviesite logo.21516221bc7344be00d4.png",
-    "static/media/video-camera-svgrepo-com.svg": "/MovieSite/static/media/video-camera-svgrepo-com.c165e8a12d851b5d73dec8e2d9fd8c81.svg",
-    "static/media/house-solid.svg": "/MovieSite/static/media/house-solid.388cf359777b512d6659159d8afca98c.svg",
-    "index.html": "/MovieSite/index.html",
-    "main.91e9fe85.css.map": "/MovieSite/static/css/main.91e9fe85.css.map",
-    "main.b864ee47.js.map": "/MovieSite/static/js/main.b864ee47.js.map",
-    "453.15010aa8.chunk.js.map": "/MovieSite/static/js/453.15010aa8.chunk.js.map"
+    "main.css": "/static/css/main.91e9fe85.css",
+    "main.js": "/static/js/main.0c8bdcd1.js",
+    "static/js/453.15010aa8.chunk.js": "/static/js/453.15010aa8.chunk.js",
+    "static/media/moviesite logo.png": "/static/media/moviesite logo.21516221bc7344be00d4.png",
+    "static/media/video-camera-svgrepo-com.svg": "/static/media/video-camera-svgrepo-com.c165e8a12d851b5d73dec8e2d9fd8c81.svg",
+    "static/media/house-solid.svg": "/static/media/house-solid.388cf359777b512d6659159d8afca98c.svg",
+    "index.html": "/index.html",
+    "main.91e9fe85.css.map": "/static/css/main.91e9fe85.css.map",
+    "main.0c8bdcd1.js.map": "/static/js/main.0c8bdcd1.js.map",
+    "453.15010aa8.chunk.js.map": "/static/js/453.15010aa8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.91e9fe85.css",
-    "static/js/main.b864ee47.js"
+    "static/js/main.0c8bdcd1.js"
   ]
 }
