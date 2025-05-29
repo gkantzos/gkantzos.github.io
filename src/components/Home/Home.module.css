@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  overflow-x: hidden;
+  
+}
+
 .mainContent {
   text-align: center;
   max-width: 700px;
@@ -112,21 +118,21 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: 2fr;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   justify-content: center;
   margin-top: 10px;
-  flex-direction: column;
   margin: 100px;
-  align-items:center;
+  align-items: center;
 }
 
+
 .showMoreContainer {
-  width: 100%;
+  grid-column: 1 / -1; /* καταλαμβάνει όλο το πλάτος του grid */
   text-align: center;
   margin-top: 10px;
 }
+
 
 .showMoreButton {
   background: none;
@@ -185,4 +191,17 @@
   pointer-events: none;
   z-index: 1;
 }
+
+.cardsPageGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 220px);
+  
+  padding: 40px;
+  box-sizing: border-box;
+}
+
 

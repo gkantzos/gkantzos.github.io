@@ -5,17 +5,17 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 150px;
+  grid-template-columns: repeat(6, 400px);
+  gap: 100px;
   padding: 40px;
+  justify-content: center;
 }
 
 .cardWrapper {
-  width: 400px;
-  height: 540px;
+  min-width: 400px;
   perspective: 1000px;
+  height: 540px;
 }
-
 .card {
   position: relative;
   width: 100%;
@@ -26,7 +26,6 @@ body {
   transform-origin: center;
 }
 
-/* Αυτή η κλάση προστίθεται δυναμικά μέσω React state */
 .flipped {
   transform: rotateY(180deg);
 }

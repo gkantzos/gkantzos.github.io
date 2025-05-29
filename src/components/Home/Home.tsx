@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'now' | 'upcoming'>('now');
-  const [numMoviesToShow, setNumMoviesToShow] = useState(5);
+  const [numMoviesToShow, setNumMoviesToShow] = useState(6);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,14 +24,14 @@ const Home: React.FC = () => {
 
   // Αύξηση του πλήθους ταινιών που εμφανίζουμε κάθε φορά που πατάμε το κουμπί
   const handleShowMore = () => {
-    setNumMoviesToShow(prev => prev + 5);
+    setNumMoviesToShow(prev => prev + 6);
   };
 
   // Επαναφορά του πλήθους όταν αλλάζουμε tab
   useEffect(() => {
-    setNumMoviesToShow(5);
+    setNumMoviesToShow(6);
   }, [activeTab]);
-
+  
   return (
     <section className="background">
       <div className={styles.mainContent}>
@@ -40,9 +40,9 @@ const Home: React.FC = () => {
           Experience the ultimate cinematic journey with premium Dolby Atmos sound and 8K screenings. MovieTime Cinemas offer you the comfort, quality, and entertainment you truly deserve.
         </p>
         <button className={styles.bookingButton}
-        onClick={()=> navigate('/movies')}
+          onClick={() => navigate('/movies')}
         >
-        Book a Ticket
+          Book a Ticket
         </button>
       </div>
       <div className={styles.capacityPanel}>
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div className={styles.cardsGrid}>
+      <div className={styles.cardsPageGrid}>
         <Cards movies={displayedMovies} onCardClick={(id) => navigate(`/movie/${id}`)} />
         {((activeTab === 'now' && numMoviesToShow < popularMovies.length) ||
           (activeTab === 'upcoming' && numMoviesToShow < upcomingMovies.length)) && (

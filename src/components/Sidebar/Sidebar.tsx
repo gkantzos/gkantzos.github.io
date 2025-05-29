@@ -11,23 +11,21 @@ const Sidebar: React.FC = () => {
   return (
     <nav className={styles.sidebar}>
       <Link to="/" className={styles.logo}>
-  <img src={LogoImage} alt="MovieSite Logo" className={styles.logoImage} />
-  <span className={styles.logoSubtitle}>cinemas</span>
-</Link>
-      {/* <Link to="/" className={styles.logo}>
-        MovieSite
-      </Link> */}
+        <img src={LogoImage} alt="MovieSite Logo" className={styles.logoImage} />
+        <span className={styles.logoSubtitle}>cinemas</span>
+      </Link>
+
       <ul className={styles.navList}>
         <li className={location.pathname === '/' ? styles.active : ''}>
           <Link to="/" className={styles.navLink}>
             <HomeIcon className={styles.icon} />
-            Home
+            <span className={styles.label}>Home</span>
           </Link>
         </li>
         <li className={location.pathname.startsWith('/movies') ? styles.active : ''}>
           <Link to="/movies" className={styles.navLink}>
             <MovieIcon className={styles.icon} />
-            Movies
+            <span className={styles.label}>Movies</span>
           </Link>
         </li>
       </ul>
