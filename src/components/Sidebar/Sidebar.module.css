@@ -104,3 +104,18 @@
 .active .icon {
   fill: #26c6da;
 }
+
+@media (max-width: 1023px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .logoSubtitle,
+  .label {
+    display: none;
+  }
+
+  .logoImage {
+    width: 50px;
+  }
+}

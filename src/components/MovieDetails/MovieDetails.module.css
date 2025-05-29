@@ -3,24 +3,28 @@
   gap: 30px;
   padding: 30px;
   font-family: 'Segoe UI', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .leftColumn {
   flex: 0 0 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .leftColumn img {
   width: 100%;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
 
 .leftColumn h2 {
-  margin-left: 110px;
-  margin-top: 1px;
+  margin-top: 15px;
   font-size: 30px;
   color: #ffffff;
-  
+  text-align: center;
 }
 
 .rightColumn {
@@ -28,6 +32,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  color: #f1f1f1;
 }
 
 .rightColumn h3 {
@@ -39,19 +44,37 @@
 .rightColumn p {
   line-height: 1.6;
   margin: 0;
-  color: #f1f1f1;
 }
 
 .rightColumn strong {
   color: #ff5252;
+  display: flex;
+  align-items: center;
 }
 
 .trailer {
   width: 100%;
   max-width: 720px;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
   margin-top: 15px;
+}
+
+/* Responsive για μικρές οθόνες - δεν χρειάζεται flexDirection style */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column !important;
+    padding: 20px;
+  }
+  .leftColumn {
+    flex: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .rightColumn {
+    padding-top: 20px;
+  }
 }

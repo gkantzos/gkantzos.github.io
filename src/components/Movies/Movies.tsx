@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchPopularMovies } from '../../api';
 import Cards from '../Cards/Cards';
 import styles from './Movies.module.css';
-
+import { useIsWide } from '../../Context/AspectRationContext';
 interface Movie {
   id: number;
   title: string;
@@ -36,6 +36,7 @@ const genreMap: Record<number, string> = {
 
 const Movies: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const wide = useIsWide();
 
   useEffect(() => {
     fetchPopularMovies()
@@ -65,17 +66,19 @@ const Movies: React.FC = () => {
 
   return (
     <section className={styles.background}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Popular movies</h1>
-        <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>
-      </div>
+      <div className={wide ? styles.containerWide : styles.containerNarrow}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Popular movies</h1>
+          <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>
+        </div>
 
-      <div>
-        {movies.length > 0 ? (
-          <Cards movies={movies} onCardClick={handleCardClick} />
-        ) : (
-          <div className={styles.noMovies}>No movies available</div>
-        )}
+        <div>
+          {movies.length > 0 ? (
+            <Cards movies={movies} onCardClick={handleCardClick} />
+          ) : (
+            <div className={styles.noMovies}>No movies available</div>
+          )}
+        </div>
       </div>
     </section>
   );

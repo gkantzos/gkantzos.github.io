@@ -34,3 +34,11 @@
     transform: scale(1) translateY(0);
   }
 }
+
+@media (max-width: 768px) {
+  .star {
+    width: 1.5px;
+    height: 1.5px;
+    animation-duration: 1.5s; /* ή ό,τι θέλεις */
+  }
+}

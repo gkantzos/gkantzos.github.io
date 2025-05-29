@@ -1,7 +1,34 @@
-body {
-  margin: 0;
-  overflow-x: hidden;
-  
+.homeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #eee;
+  background: 
+    radial-gradient(ellipse at top left, rgba(0, 188, 212, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(134, 44, 44, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at center, rgba(0, 188, 212, 0.1) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.homeSection::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, rgba(0, 188, 212, 0.8) 0%, transparent 50%),
+    radial-gradient(2px 2px at 40px 70px, rgba(134, 44, 44, 0.8) 0%, transparent 50%),
+    radial-gradient(1px 1px at 90px 40px, rgba(0, 188, 212, 0.6) 0%, transparent 50%),
+    radial-gradient(2px 2px at 130px 80px, rgba(134, 44, 44, 0.6) 0%, transparent 50%),
+    radial-gradient(1px 1px at 160px 30px, rgba(0, 188, 212, 0.8) 0%, transparent 50%);
+  background-size: 200px 120px, 200px 120px, 200px 120px, 200px 120px, 200px 120px;
+  animation: neonTwinkle 3s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .mainContent {
@@ -9,6 +36,8 @@ body {
   max-width: 700px;
   margin: 0 auto;
   margin-top: -70px;
+  position: relative;
+  z-index: 2;
 }
 
 .mainContent h1 {
@@ -55,6 +84,8 @@ body {
   flex-wrap: wrap;
   max-width: 700px;
   margin-right: 100px;
+  position: relative;
+  z-index: 2;
 }
 
 .capacityCard {
@@ -93,6 +124,8 @@ body {
   justify-content: center;
   gap: 15px;
   margin-top: -50px;
+  position: relative;
+  z-index: 2;
 }
 
 .tabButton {
@@ -116,23 +149,25 @@ body {
   border-color: #00bcd4;
 }
 
-.cardsGrid {
+.cardsPageGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   justify-content: center;
-  margin-top: 10px;
-  margin: 100px;
   align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
 }
-
 
 .showMoreContainer {
-  grid-column: 1 / -1; /* καταλαμβάνει όλο το πλάτος του grid */
+  grid-column: 1 / -1;
   text-align: center;
   margin-top: 10px;
+  position: relative;
+  z-index: 2;
 }
-
 
 .showMoreButton {
   background: none;
@@ -149,59 +184,4 @@ body {
   color: #121212;
 }
 
-@media (max-width: 768px) {
-  .capacityPanel {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.homeSection {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 40px 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #eee;
-  background: 
-    radial-gradient(ellipse at top left, rgba(0, 188, 212, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(134, 44, 44, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at center, rgba(0, 188, 212, 0.1) 0%, transparent 70%),
-    linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.homeSection::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(2px 2px at 20px 30px, rgba(0, 188, 212, 0.8) 0%, transparent 50%),
-    radial-gradient(2px 2px at 40px 70px, rgba(134, 44, 44, 0.8) 0%, transparent 50%),
-    radial-gradient(1px 1px at 90px 40px, rgba(0, 188, 212, 0.6) 0%, transparent 50%),
-    radial-gradient(2px 2px at 130px 80px, rgba(134, 44, 44, 0.6) 0%, transparent 50%),
-    radial-gradient(1px 1px at 160px 30px, rgba(0, 188, 212, 0.8) 0%, transparent 50%);
-  background-size: 200px 120px, 200px 120px, 200px 120px, 200px 120px, 200px 120px;
-  animation: neonTwinkle 3s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.cardsPageGrid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  width: calc(100vw - 220px);
-  
-  padding: 40px;
-  box-sizing: border-box;
-}
-
-
+/* Αν θες μπορείς να προσθέσεις media queries για πολύ μικρές οθόνες, αλλά με το useWide και inline styles είναι ήδη καλυμμένο */

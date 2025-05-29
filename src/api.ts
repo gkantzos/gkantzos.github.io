@@ -19,12 +19,6 @@ export async function fetchNowPlaying() {
   return response.json();
 }
 
-export async function fetchUpcoming() {
-  const response = await fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US`);
-  if (!response.ok) throw new Error('Failed to fetch upcoming movies');
-  return response.json();
-}
-
 export async function fetchUpcomingMovies() {
   const response = await fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US`);
   if (!response.ok) throw new Error('Failed to fetch upcoming movies');

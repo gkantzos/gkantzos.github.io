@@ -3,6 +3,7 @@ import styles from './Home.module.css';
 import { fetchPopularMovies, fetchUpcomingMovies } from '../../api';
 import Cards from '../Cards/Cards';
 import { useNavigate } from 'react-router-dom';
+import { useIsWide } from '../../Context/AspectRationContext';
 
 const Home: React.FC = () => {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'now' | 'upcoming'>('now');
   const [numMoviesToShow, setNumMoviesToShow] = useState(6);
   const navigate = useNavigate();
+  const isWide = useIsWide();  // Εδώ παίρνεις το boolean για το πλάτος οθόνης
 
   useEffect(() => {
     fetchPopularMovies().then(data => setPopularMovies(data.results || []));
@@ -22,29 +24,31 @@ const Home: React.FC = () => {
       ? popularMovies.slice(0, numMoviesToShow)
       : upcomingMovies.slice(0, numMoviesToShow);
 
-  // Αύξηση του πλήθους ταινιών που εμφανίζουμε κάθε φορά που πατάμε το κουμπί
+  // Αύξηση πλήθους ταινιών
   const handleShowMore = () => {
     setNumMoviesToShow(prev => prev + 6);
   };
 
-  // Επαναφορά του πλήθους όταν αλλάζουμε tab
+  // Επαναφορά πλήθους όταν αλλάζουμε tab
   useEffect(() => {
     setNumMoviesToShow(6);
   }, [activeTab]);
-  
+
   return (
-    <section className="background">
+    <section className={styles.homeSection}>
       <div className={styles.mainContent}>
         <h1>Welcome to MovieTime Cinemas</h1>
         <p>
           Experience the ultimate cinematic journey with premium Dolby Atmos sound and 8K screenings. MovieTime Cinemas offer you the comfort, quality, and entertainment you truly deserve.
         </p>
-        <button className={styles.bookingButton}
+        <button
+          className={styles.bookingButton}
           onClick={() => navigate('/movies')}
         >
           Book a Ticket
         </button>
       </div>
+
       <div className={styles.capacityPanel}>
         <div className={styles.capacityCard}>
           <h2>Star Avenue</h2>
@@ -73,17 +77,27 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div className={styles.cardsPageGrid}>
+      <div
+        className={styles.cardsPageGrid}
+        style={{
+          gridTemplateColumns: isWide
+            ? 'repeat(6, 1fr)'
+            : window.innerWidth > 480
+            ? 'repeat(3, 1fr)'
+            : 'repeat(1, 1fr)'
+        }}
+      >
         <Cards movies={displayedMovies} onCardClick={(id) => navigate(`/movie/${id}`)} />
-        {((activeTab === 'now' && numMoviesToShow < popularMovies.length) ||
-          (activeTab === 'upcoming' && numMoviesToShow < upcomingMovies.length)) && (
-          <div className={styles.showMoreContainer}>
-            <button onClick={handleShowMore} className={styles.showMoreButton}>
-              LOAD MORE...
-            </button>
-          </div>
-        )}
       </div>
+
+      {((activeTab === 'now' && numMoviesToShow < popularMovies.length) ||
+        (activeTab === 'upcoming' && numMoviesToShow < upcomingMovies.length)) && (
+        <div className={styles.showMoreContainer}>
+          <button onClick={handleShowMore} className={styles.showMoreButton}>
+            LOAD MORE...
+          </button>
+        </div>
+      )}
     </section>
   );
 };

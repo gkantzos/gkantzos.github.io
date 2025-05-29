@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Cards.module.css';
 import { fetchMovieVideos } from '../../api';
+import { useIsWide } from '../../Context/AspectRationContext';
 
 interface Movie {
   id: number;
@@ -25,6 +26,8 @@ const truncate = (text: string, maxWords: number) => {
 const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
   const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
+
+  const isWide = useIsWide();
 
   useEffect(() => {
     async function loadTrailers() {
@@ -52,7 +55,7 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
   if (movies.length === 0) return <p>No movies available</p>;
 
   return (
-    <div className={styles.grid}>
+    <div className={isWide ? styles.gridWide : styles.gridNarrow}>
       {movies.map(movie => {
         const isFlipped = flippedCardId === movie.id;
 
@@ -86,7 +89,6 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
                   {new Date(movie.release_date).toLocaleDateString('en-GB')}
                 </h3>
 
-                {/* Trailer iframe - ΜΟΝΟ ΟΤΑΝ είναι flipped */}
                 {trailers[movie.id] ? (
                   <div className={styles.trailerContainer}>
                     {isFlipped && (

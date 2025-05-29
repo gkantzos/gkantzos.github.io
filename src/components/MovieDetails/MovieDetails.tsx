@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieDetails, fetchMovieVideos } from '../../api';
 import styles from './MovieDetails.module.css';
 import { Star, Hourglass } from 'lucide-react';
-
+import { useIsWide } from '../../Context/AspectRationContext';
 interface MovieDetailsType {
   id: number;
   title: string;
@@ -20,6 +20,7 @@ const MovieDetails: React.FC = () => {
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const wide = useIsWide();
 
   useEffect(() => {
     if (!id) return;
@@ -27,7 +28,9 @@ const MovieDetails: React.FC = () => {
       try {
         const movieData = await fetchMovieDetails(parseInt(id));
         const videoData = await fetchMovieVideos(parseInt(id));
-        const trailer = videoData.results.find((vid: any) => vid.type === 'Trailer' && vid.site === 'YouTube');
+        const trailer = videoData.results.find(
+          (vid: any) => vid.type === 'Trailer' && vid.site === 'YouTube'
+        );
 
         setMovie(movieData);
         setTrailerKey(trailer ? trailer.key : null);
@@ -46,7 +49,10 @@ const MovieDetails: React.FC = () => {
 
   return (
     <section className="background">
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        style={{ flexDirection: wide ? 'row' : 'column' }}
+      >
         <div className={styles.leftColumn}>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -58,11 +64,32 @@ const MovieDetails: React.FC = () => {
         <div className={styles.rightColumn}>
           <h3>Overview</h3>
           <p>{movie.overview}</p>
-          <p><strong>Release Date:</strong> {new Date(movie.release_date).toLocaleDateString('en-GB')}</p>
-          <p><strong>Genres:</strong> {movie.genres.map(g => g.name).join(', ')}</p>
-          <p><strong><Hourglass color="#FFD700" size={18} style={{ marginRight: 5 }} /> Runtime:</strong> {movie.runtime} minutes</p>
-          <p><strong><Star color="#FFD700" size={18} style={{ marginRight: 5 }} /> Rating:</strong> {movie.vote_average.toFixed(2)}/10</p>
-          
+          <p>
+            <strong>Release Date:</strong>{' '}
+            {new Date(movie.release_date).toLocaleDateString('en-GB')}
+          </p>
+          <p>
+            <strong>Genres:</strong> {movie.genres.map(g => g.name).join(', ')}
+          </p>
+          <p>
+            <strong>
+              <Hourglass
+                color="#FFD700"
+                size={18}
+                style={{ marginRight: 5 }}
+              />{' '}
+              Runtime:
+            </strong>{' '}
+            {movie.runtime} minutes
+          </p>
+          <p>
+            <strong>
+              <Star color="#FFD700" size={18} style={{ marginRight: 5 }} />{' '}
+              Rating:
+            </strong>{' '}
+            {movie.vote_average.toFixed(2)}/10
+          </p>
+
           {trailerKey && (
             <div className={styles.trailer}>
               <iframe
@@ -80,5 +107,6 @@ const MovieDetails: React.FC = () => {
       </div>
     </section>
   );
-}
+};
+
 export default MovieDetails;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Starseffect.module.css';
-
+import { useIsWide } from '../../Context/AspectRationContext';
 interface Star {
   id: number;
   top: number;
@@ -10,7 +10,8 @@ interface Star {
 }
 
 const Starseffect: React.FC = () => {
-  const starsCount = 150;
+  const isWide = useIsWide();
+  const starsCount = isWide ? 150 : 80;  // λιγότερα αστέρια σε στενές οθόνες
 
   const [stars, setStars] = useState<Star[]>([]);
 
@@ -19,14 +20,14 @@ const Starseffect: React.FC = () => {
     for (let i = 0; i < starsCount; i++) {
       generatedStars.push({
         id: i,
-        top: Math.random() * 100, // σε ποσοστό vh
-        left: Math.random() * 100, // σε ποσοστό vw
-        animationDelay: Math.random() * 2, // σε sec
-        animationDuration: 1.5 + Math.random() * 1.5, // 1.5 - 3 sec
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        animationDelay: Math.random() * 2,
+        animationDuration: 1.5 + Math.random() * 1.5,
       });
     }
     setStars(generatedStars);
-  }, []);
+  }, [starsCount]);  // προσθέτουμε το starsCount στα dependencies για επανεκτέλεση αν αλλάξει
 
   return (
     <div className={styles.container}>
