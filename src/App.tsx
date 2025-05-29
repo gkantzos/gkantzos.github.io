@@ -5,7 +5,7 @@ import Home from './components/Home/Home';
 import Movies from './components/Movies/Movies';
 import MovieDetails from './components/MovieDetails/MovieDetails';
 import Footer from './components/Footer/Footer';
-import Starseffect from './components/Starseffect/Starseffect';
+import Starseffect from './components/Stareffect/Starseffect';
 
   const App: React.FC = () => (
    <BrowserRouter>
