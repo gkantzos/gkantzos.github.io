@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieDetails, fetchMovieVideos } from '../../api';
 import styles from './MovieDetails.module.css';
 import { Star, Hourglass } from 'lucide-react';
-import { useIsWide } from '../../Context/AspectRationContext';
+import { useScreen } from '../../Context/ResponsiveContext';
+
 interface MovieDetailsType {
   id: number;
   title: string;
@@ -20,7 +21,7 @@ const MovieDetails: React.FC = () => {
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const wide = useIsWide();
+  const { isWide, isMobile } = useScreen();
 
   useEffect(() => {
     if (!id) return;
@@ -44,14 +45,17 @@ const MovieDetails: React.FC = () => {
     fetchData();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (!movie) return <p>Movie not found.</p>;
+  if (loading) return <div style={{ padding: '20px', color: '#fff', textAlign: 'center' }}>Loading...</div>;
+  if (!movie) return <div style={{ padding: '20px', color: '#fff', textAlign: 'center' }}>Movie not found.</div>;
 
   return (
     <section className="background">
       <div
         className={styles.container}
-        style={{ flexDirection: wide ? 'row' : 'column' }}
+        style={{ 
+          flexDirection: isWide ? 'row' : 'column',
+          alignItems: isMobile ? 'center' : 'flex-start'
+        }}
       >
         <div className={styles.leftColumn}>
           <img
@@ -75,7 +79,7 @@ const MovieDetails: React.FC = () => {
             <strong>
               <Hourglass
                 color="#FFD700"
-                size={18}
+                size={isMobile ? 16 : 18}
                 style={{ marginRight: 5 }}
               />{' '}
               Runtime:
@@ -84,7 +88,11 @@ const MovieDetails: React.FC = () => {
           </p>
           <p>
             <strong>
-              <Star color="#FFD700" size={18} style={{ marginRight: 5 }} />{' '}
+              <Star 
+                color="#FFD700" 
+                size={isMobile ? 16 : 18} 
+                style={{ marginRight: 5 }} 
+              />{' '}
               Rating:
             </strong>{' '}
             {movie.vote_average.toFixed(2)}/10

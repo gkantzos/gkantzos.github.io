@@ -5,9 +5,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: 1px;
+  gap: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: flex-direction 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .footer h2 {
@@ -20,10 +20,12 @@
 .locations, .contact {
   max-width: 280px;
   margin-bottom: 20px;
+  flex: 1 1 250px;
+  min-width: 200px;
 }
 
 .contact {
-  margin-right: 80px;
+  margin-right: 0;
 }
 
 .locations p,
@@ -38,9 +40,12 @@
 .socials {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 25px;
   font-size: 1.8rem;
   margin-bottom: 20px;
+  flex: 1 1 100%;
+  order: 3;
 }
 
 .socials a {
@@ -55,7 +60,65 @@
 .copy {
   flex-basis: 100%;
   text-align: center;
-  margin-top: -25px;
+  margin-top: 10px;
   font-size: 0.9rem;
   color: #666;
+  order: 4;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px 20px;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .locations, .contact {
+    max-width: 100%;
+    margin-bottom: 15px;
+    flex: 1 1 100%;
+  }
+  
+  .footer h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .locations p,
+  .contact p {
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+  
+  .socials {
+    gap: 20px;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+  
+  .copy {
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px 15px;
+  }
+  
+  .footer h2 {
+    font-size: 1.1rem;
+  }
+  
+  .locations p,
+  .contact p {
+    font-size: 0.85rem;
+  }
+  
+  .socials {
+    gap: 15px;
+    font-size: 1.4rem;
+  }
 }

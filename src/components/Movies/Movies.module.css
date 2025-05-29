@@ -14,13 +14,14 @@
 }
 
 .containerWide {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 .containerNarrow {
-  padding: 0 10px;
+  padding: 0 20px;
+  max-width: 100%;
 }
 
 .header {
@@ -53,4 +54,141 @@
   font-size: 1.2rem;
   color: #bbb;
   padding: 20px 0;
+}
+
+/* Ultrawide screens (1920px+) */
+@media (min-width: 1920px) {
+  .background {
+    padding: 50px 30px;
+    gap: 40px;
+  }
+  
+  .containerWide {
+    max-width: 2400px;
+    padding: 0 60px;
+  }
+  
+  .title {
+    font-size: 3.2rem;
+    margin-top: -40px;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+  }
+  
+  .header {
+    margin-bottom: 50px;
+  }
+}
+
+/* Desktop screens (1024px - 1919px) */
+@media (max-width: 1919px) and (min-width: 1024px) {
+  .background {
+    padding: 35px 25px;
+  }
+  
+  .containerWide {
+    max-width: 1200px;
+    padding: 0 30px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.05rem;
+  }
+}
+
+/* Tablet screens (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .background {
+    padding: 30px 20px;
+    gap: 25px;
+  }
+  
+  .containerNarrow {
+    padding: 0 15px;
+  }
+  
+  .title {
+    font-size: 2.2rem;
+    margin-top: -20px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .header {
+    margin-bottom: 30px;
+  }
+  
+  .noMovies {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile screens (480px - 767px) */
+@media (max-width: 767px) {
+  .background {
+    padding: 20px 15px;
+    gap: 20px;
+  }
+  
+  .containerNarrow {
+    padding: 0 10px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    margin-top: -15px;
+    letter-spacing: 0.5px;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  
+  .header {
+    margin-bottom: 25px;
+  }
+  
+  .noMovies {
+    font-size: 1rem;
+    padding: 15px 0;
+  }
+}
+
+/* Small mobile screens (max 479px) */
+@media (max-width: 479px) {
+  .background {
+    padding: 15px 10px;
+    gap: 15px;
+  }
+  
+  .containerNarrow {
+    padding: 0 5px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    margin-top: -10px;
+  }
+  
+  .subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .noMovies {
+    font-size: 0.9rem;
+    padding: 10px 0;
+  }
 }

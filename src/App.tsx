@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import useAspectRatio from './hooks/useAspectRatio';
-import { AspectRatioProvider } from './Context/AspectRationContext';
+import { useResponsive } from './hooks/useResponsive'; // ✅ correct
+import { ResponsiveProvider } from './Context/ResponsiveContext';
 import Sidebar from './components/Sidebar/Sidebar';
 import Home from './components/Home/Home';
 import Movies from './components/Movies/Movies';
@@ -11,7 +11,7 @@ import Starseffect from './components/Stareffect/Starseffect';
 
   const App: React.FC = () => (
    <BrowserRouter>
-    <AspectRatioProvider>
+    <ResponsiveProvider>
     <>
       <Starseffect />
       <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
@@ -28,7 +28,7 @@ import Starseffect from './components/Stareffect/Starseffect';
         <Footer />
       </div>
     </>
-    </AspectRatioProvider>
+   </ResponsiveProvider>
   </BrowserRouter>
 );
 

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { fetchPopularMovies } from '../../api';
 import Cards from '../Cards/Cards';
 import styles from './Movies.module.css';
-import { useIsWide } from '../../Context/AspectRationContext';
+import { useScreen } from '../../Context/ResponsiveContext';
+import { useNavigate } from 'react-router-dom';
+
 interface Movie {
   id: number;
   title: string;
@@ -36,7 +38,8 @@ const genreMap: Record<number, string> = {
 
 const Movies: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const wide = useIsWide();
+  const { isWide } = useScreen();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPopularMovies()
@@ -61,12 +64,12 @@ const Movies: React.FC = () => {
   }, []);
 
   const handleCardClick = (id: number) => {
-    window.location.href = `/movie/${id}`;
+    navigate(`/movie/${id}`);
   };
 
   return (
     <section className={styles.background}>
-      <div className={wide ? styles.containerWide : styles.containerNarrow}>
+      <div className={isWide ? styles.containerWide : styles.containerNarrow}>
         <div className={styles.header}>
           <h1 className={styles.title}>Popular movies</h1>
           <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>

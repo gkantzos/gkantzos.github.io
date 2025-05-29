@@ -1,13 +1,20 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styles from './Footer.module.css';
-import { useIsWide } from '../../Context/AspectRationContext';
+import { useScreen } from '../../Context/ResponsiveContext';
 
 const Footer: React.FC = () => {
-  const isWide = useIsWide();
+  const { isWide, isMobile } = useScreen();
 
   return (
-    <footer className={styles.footer} style={{ flexDirection: isWide ? 'row' : 'column', alignItems: isWide ? 'flex-start' : 'center' }}>
+    <footer 
+      className={styles.footer} 
+      style={{ 
+        flexDirection: isWide ? 'row' : 'column', 
+        alignItems: isWide ? 'flex-start' : 'center',
+        textAlign: isMobile ? 'center' : 'left'
+      }}
+    >
       <div className={styles.locations}>
         <h2>Our Locations</h2>
         <p>📍 1234 Star Avenue, Los Angeles, CA 90001</p>

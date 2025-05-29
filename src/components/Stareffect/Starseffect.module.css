@@ -1,13 +1,13 @@
 .container {
-  position:fixed; /* fixed ώστε να μένει πάντα πάνω στην οθόνη */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 2; 
+  z-index: 2;
+  overflow: hidden;
 }
-
 
 .star {
   position: absolute;
@@ -18,6 +18,7 @@
   opacity: 0.8;
   animation: twinkle 2s infinite ease-in-out alternate;
   will-change: transform, opacity;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes twinkle {
@@ -35,10 +36,104 @@
   }
 }
 
+/* Responsive αστέρια */
+@media (min-width: 1920px) {
+  .star {
+    width: 2.5px;
+    height: 2.5px;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+  
+  @keyframes twinkle {
+    0% {
+      opacity: 0.4;
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.4) translateY(-7px);
+    }
+    100% {
+      opacity: 0.4;
+      transform: scale(1) translateY(0);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .star {
+    width: 1.8px;
+    height: 1.8px;
+    animation-duration: 1.8s;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.25);
+  }
+}
+
 @media (max-width: 768px) {
   .star {
     width: 1.5px;
     height: 1.5px;
-    animation-duration: 1.5s; /* ή ό,τι θέλεις */
+    animation-duration: 1.5s;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+  }
+  
+  @keyframes twinkle {
+    0% {
+      opacity: 0.2;
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.2) translateY(-3px);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(1) translateY(0);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .star {
+    width: 1px;
+    height: 1px;
+    animation-duration: 1.2s;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+  
+  @keyframes twinkle {
+    0% {
+      opacity: 0.2;
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1) translateY(-2px);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(1) translateY(0);
+    }
+  }
+}
+
+/* Performance optimizations για μικρές οθόνες */
+@media (max-width: 768px) {
+  .container {
+    /* Μειώνουμε την περιοχή rendering για καλύτερη απόδοση */
+    transform: translateZ(0);
+  }
+  
+  .star {
+    /* Απλοποιούμε τα animations για καλύτερη απόδοση */
+    will-change: opacity;
+  }
+}
+
+/* Reduced motion για accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none;
+    opacity: 0.5;
   }
 }

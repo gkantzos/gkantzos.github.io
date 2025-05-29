@@ -3,7 +3,7 @@ import styles from './Home.module.css';
 import { fetchPopularMovies, fetchUpcomingMovies } from '../../api';
 import Cards from '../Cards/Cards';
 import { useNavigate } from 'react-router-dom';
-import { useIsWide } from '../../Context/AspectRationContext';
+import { useScreen } from '../../Context/ResponsiveContext';
 
 const Home: React.FC = () => {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
@@ -11,12 +11,21 @@ const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'now' | 'upcoming'>('now');
   const [numMoviesToShow, setNumMoviesToShow] = useState(6);
   const navigate = useNavigate();
-  const isWide = useIsWide();  // Εδώ παίρνεις το boolean για το πλάτος οθόνης
+  const { isMobile, isTablet, isDesktop, isUltrawide, isWide } = useScreen();
 
   useEffect(() => {
     fetchPopularMovies().then(data => setPopularMovies(data.results || []));
     fetchUpcomingMovies().then(data => setUpcomingMovies(data.results || []));
   }, []);
+
+  // Καθορίζουμε πόσες ταινίες να δείχνουμε αρχικά με βάση το screen size
+  const getInitialMoviesCount = () => {
+    if (isMobile) return 4;
+    if (isTablet) return 6;
+    if (isDesktop) return 8;
+    if (isUltrawide) return 12;
+    return 6;
+  };
 
   // Εμφάνιση ταινιών με βάση το ενεργό tab και το πλήθος που θέλουμε να δείξουμε
   const displayedMovies =
@@ -26,13 +35,14 @@ const Home: React.FC = () => {
 
   // Αύξηση πλήθους ταινιών
   const handleShowMore = () => {
-    setNumMoviesToShow(prev => prev + 6);
+    const increment = isMobile ? 2 : isTablet ? 3 : isDesktop ? 4 : 6;
+    setNumMoviesToShow(prev => prev + increment);
   };
 
-  // Επαναφορά πλήθους όταν αλλάζουμε tab
+  // Επαναφορά πλήθους όταν αλλάζουμε tab ή screen size
   useEffect(() => {
-    setNumMoviesToShow(6);
-  }, [activeTab]);
+    setNumMoviesToShow(getInitialMoviesCount());
+  }, [activeTab, isMobile, isTablet, isDesktop, isUltrawide]);
 
   return (
     <section className={styles.homeSection}>
@@ -49,7 +59,15 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div className={styles.capacityPanel}>
+      <div 
+        className={styles.capacityPanel}
+        style={{
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'center' : 'flex-start',
+          marginRight: isMobile ? '0' : '100px',
+          gap: isMobile ? '10px' : '20px'
+        }}
+      >
         <div className={styles.capacityCard}>
           <h2>Star Avenue</h2>
           <p className={styles.seats}>2757 Seats</p>
@@ -77,16 +95,7 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div
-        className={styles.cardsPageGrid}
-        style={{
-          gridTemplateColumns: isWide
-            ? 'repeat(6, 1fr)'
-            : window.innerWidth > 480
-            ? 'repeat(3, 1fr)'
-            : 'repeat(1, 1fr)'
-        }}
-      >
+      <div className={styles.cardsPageGrid}>
         <Cards movies={displayedMovies} onCardClick={(id) => navigate(`/movie/${id}`)} />
       </div>
 

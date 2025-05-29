@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Cards.module.css';
 import { fetchMovieVideos } from '../../api';
-import { useIsWide } from '../../Context/AspectRationContext';
+import { useScreen } from '../../Context/ResponsiveContext';
 
 interface Movie {
   id: number;
@@ -27,7 +27,23 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
   const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
-  const isWide = useIsWide();
+  const { isMobile, isTablet, isDesktop, isUltrawide } = useScreen();
+
+  // Καθορίζουμε το grid class με βάση το screen size
+  const getGridClass = () => {
+    if (isMobile) return styles.gridMobile;
+    if (isTablet) return styles.gridTablet;
+    if (isDesktop) return styles.gridDesktop;
+    if (isUltrawide) return styles.gridUltrawide;
+    return styles.gridDesktop; // fallback
+  };
+
+  // Καθορίζουμε πόσες λέξεις να δείχνουμε στην περιγραφή
+  const getMaxWords = () => {
+    if (isMobile) return 8;
+    if (isTablet) return 12;
+    return 15;
+  };
 
   useEffect(() => {
     async function loadTrailers() {
@@ -55,7 +71,7 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
   if (movies.length === 0) return <p>No movies available</p>;
 
   return (
-    <div className={isWide ? styles.gridWide : styles.gridNarrow}>
+    <div className={getGridClass()}>
       {movies.map(movie => {
         const isFlipped = flippedCardId === movie.id;
 
@@ -77,7 +93,7 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
 
               <div className={styles.cardContent}>
                 <p><strong>Description:</strong></p>
-                <p>{truncate(movie.overview, 15)}</p>
+                <p>{truncate(movie.overview, getMaxWords())}</p>
                 <h3>
                   <span className={styles.label}>Genres:</span>{' '}
                   {Array.isArray(movie.genre_names) && movie.genre_names.length > 0
@@ -94,7 +110,7 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
                     {isFlipped && (
                       <iframe
                         width="100%"
-                        height="250"
+                        height="100%"
                         src={`https://www.youtube.com/embed/${trailers[movie.id]}?rel=0&autoplay=1&mute=1&controls=1`}
                         title={`${movie.title} Trailer`}
                         frameBorder="0"
