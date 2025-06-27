@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import { fetchPopularMovies, fetchUpcomingMovies } from '../../api';
-import Cards from '../Cards/Cards';
+import Cards from '../../components/Cards/Cards';
 import { useNavigate } from 'react-router-dom';
 import { useScreen } from '../../Context/ResponsiveContext';
 
@@ -18,31 +18,31 @@ const Home: React.FC = () => {
     fetchUpcomingMovies().then(data => setUpcomingMovies(data.results || []));
   }, []);
 
-  // Καθορίζουμε πόσες ταινίες να δείχνουμε αρχικά με βάση το screen size
+  // Αρχικός αριθμός ταινιών που θα εμφανίζονται, ανάλογα με το μέγεθος οθόνης
   const getInitialMoviesCount = () => {
-    if (isMobile) return 4;
-    if (isTablet) return 6;
-    if (isDesktop) return 8;
-    if (isUltrawide) return 12;
+    if (isMobile) return 4;       // Mobile: αρχικά 2 ταινίες κάθετα
+    if (isTablet) return 4;       // Tablet: 6 οριζόντια
+    if (isDesktop) return 6;      // Desktop: 8 οριζόντια
+    if (isUltrawide) return 6;   // Ultrawide: 12 οριζόντια
     return 6;
   };
 
-  // Εμφάνιση ταινιών με βάση το ενεργό tab και το πλήθος που θέλουμε να δείξουμε
+  // Ενημερώνουμε το πλήθος εμφάνισης όταν αλλάζει το tab ή το μέγεθος οθόνης
+  useEffect(() => {
+    setNumMoviesToShow(getInitialMoviesCount());
+  }, [activeTab, isMobile, isTablet, isDesktop, isUltrawide]);
+
+  // Ταινίες που εμφανίζονται ανάλογα με tab και αριθμό
   const displayedMovies =
     activeTab === 'now'
       ? popularMovies.slice(0, numMoviesToShow)
       : upcomingMovies.slice(0, numMoviesToShow);
 
-  // Αύξηση πλήθους ταινιών
+  // Λειτουργία "LOAD MORE"
   const handleShowMore = () => {
-    const increment = isMobile ? 2 : isTablet ? 3 : isDesktop ? 4 : 6;
+    const increment = isMobile ? 4 : isTablet ? 4 : isDesktop ? 4 : 6;
     setNumMoviesToShow(prev => prev + increment);
   };
-
-  // Επαναφορά πλήθους όταν αλλάζουμε tab ή screen size
-  useEffect(() => {
-    setNumMoviesToShow(getInitialMoviesCount());
-  }, [activeTab, isMobile, isTablet, isDesktop, isUltrawide]);
 
   return (
     <section className={styles.homeSection}>
@@ -59,24 +59,20 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div 
-        className={styles.capacityPanel}
-        style={{
-          flexDirection: isMobile ? 'column' : 'row',
-          alignItems: isMobile ? 'center' : 'flex-start',
-          marginRight: isMobile ? '0' : '100px',
-          gap: isMobile ? '10px' : '20px'
-        }}
-      >
-        <div className={styles.capacityCard}>
-          <h2>Star Avenue</h2>
-          <p className={styles.seats}>2757 Seats</p>
-          <p className={styles.halls}>9 Halls</p>
+      <div className={styles.capacityWrapper}>
+        <div className={styles.capacityPanel}>
+          <div className={styles.capacityCard}>
+            <h2>Star Avenue</h2>
+            <p className={styles.seats}>2757 Seats</p>
+            <p className={styles.halls}>9 Halls</p>
+          </div>
         </div>
-        <div className={styles.capacityCard}>
-          <h2>Cinema Boulevard</h2>
-          <p className={styles.seats}>2192 Seats</p>
-          <p className={styles.halls}>8 Halls</p>
+        <div className={styles.capacityPanel}>
+          <div className={styles.capacityCard}>
+            <h2>Cinema Boulevard</h2>
+            <p className={styles.seats}>2192 Seats</p>
+            <p className={styles.halls}>8 Halls</p>
+          </div>
         </div>
       </div>
 
@@ -95,10 +91,16 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-      <div className={styles.cardsPageGrid}>
+      {/* Κάρτες ταινιών */}
+      <div
+        className={`${styles.cardsPageGrid} ${
+          isMobile ? styles.verticalList : styles.horizontalGrid
+        }`}
+      >
         <Cards movies={displayedMovies} onCardClick={(id) => navigate(`/movie/${id}`)} />
       </div>
 
+      {/* Κουμπί LOAD MORE αν υπάρχουν ακόμα ταινίες */}
       {((activeTab === 'now' && numMoviesToShow < popularMovies.length) ||
         (activeTab === 'upcoming' && numMoviesToShow < upcomingMovies.length)) && (
         <div className={styles.showMoreContainer}>

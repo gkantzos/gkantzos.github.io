@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPopularMovies } from '../../api';
-import Cards from '../Cards/Cards';
+import Cards from '../../components/Cards/Cards';
 import styles from './Movies.module.css';
 import { useScreen } from '../../Context/ResponsiveContext';
 import { useNavigate } from 'react-router-dom';

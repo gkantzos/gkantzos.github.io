@@ -7,14 +7,7 @@ const Footer: React.FC = () => {
   const { isWide, isMobile } = useScreen();
 
   return (
-    <footer 
-      className={styles.footer} 
-      style={{ 
-        flexDirection: isWide ? 'row' : 'column', 
-        alignItems: isWide ? 'flex-start' : 'center',
-        textAlign: isMobile ? 'center' : 'left'
-      }}
-    >
+    <footer className={styles.footer}>
       <div className={styles.locations}>
         <h2>Our Locations</h2>
         <p>📍 1234 Star Avenue, Los Angeles, CA 90001</p>

@@ -52,9 +52,16 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
         movies.map(async (movie) => {
           try {
             const data = await fetchMovieVideos(movie.id);
-            const trailer = data.results.find(
-              (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
-            );
+            let trailer = data.results.find(
+  (video: any) =>
+    video.type === 'Trailer' && video.site === 'YouTube' && video.official
+);
+
+if (!trailer) {
+  trailer = data.results.find(
+    (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
+  );
+}
             if (trailer) {
               trailerMap[movie.id] = trailer.key;
             }

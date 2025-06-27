@@ -1,0 +1,266 @@
+.background {
+  background: 
+    radial-gradient(ellipse at top left, rgba(0, 188, 212, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(134, 44, 44, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at center, rgba(0, 188, 212, 0.1) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Μήνυμα φόρτωσης ή σφάλματος */
+.message {
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+/* Κεντρικό container */
+.container {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1200px;
+  align-items: start;
+}
+
+/* Flex row & column για responsive */
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.alignStart {
+  align-items: flex-start;
+}
+
+/* Αριστερή στήλη */
+.leftColumn {
+  flex: 0 0 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  width: 100%;
+}
+
+.poster {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.leftColumn h2 {
+  margin-top: 15px;
+  font-size: 30px;
+  color: #ffffff;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Δεξιά στήλη */
+.rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #f1f1f1;
+  min-width: 0;
+}
+
+.rightColumn h3 {
+  font-size: 24px;
+  color: #00bcd4;
+  margin: 0;
+}
+
+.rightColumn p {
+  line-height: 1.6;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.rightColumn p strong {
+  color: #00e676;
+}
+
+.rightColumn strong {
+  color: #ff5252;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Trailer section — μεγαλύτερο και πιο εμφανές */
+.trailer {
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  align-self: center;
+}
+
+/* Αν χρησιμοποιείται με icons */
+.iconText {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 40px;
+  padding: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cinemaTitle {
+  color: #00bcd4;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+.cinemaOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: linear-gradient(135deg, 
+    rgba(0, 188, 212, 0.05) 0%, 
+    rgba(134, 44, 44, 0.05) 50%, 
+    rgba(0, 188, 212, 0.05) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cinemaOption::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 188, 212, 0.1) 50%, 
+    transparent 100%);
+  transition: left 0.6s ease;
+}
+
+.cinemaOption:hover::before {
+  left: 100%;
+}
+
+.cinemaOption:hover {
+  border-color: rgba(0, 188, 212, 0.4);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Cinema info section */
+.cinemaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cinemaLabel {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cinemaName {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.cinemaLocation {
+  color: #00bcd4;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Redirect button στυλ όπως στη φωτογραφία */
+.redirectButton {
+  background: linear-gradient(135deg, 
+    rgba(0, 188, 212, 0.8) 0%, 
+    rgba(0, 188, 212, 0.6) 100%);
+  color: #ffffff;
+  padding: 12px 24px;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden; 
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.2);
+}
+
+.redirectButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.redirectButton:hover::before {
+  left: 100%;
+}
+
+.redirectButton:hover {
+  background: linear-gradient(135deg, 
+    rgba(0, 188, 212, 1) 0%, 
+    rgba(0, 151, 167, 1) 100%);
+  border-color: rgba(0, 188, 212, 0.6);
+  box-shadow: 0 6px 25px rgba(0, 188, 212, 0.4);
+  transform: translateY(-1px);
+}

@@ -31,25 +31,48 @@ export async function fetchMovieVideos(movieId: number) {
   return response.json();
 }
 
-/**
- * Fetch popular movies and attach the first YouTube trailer key (if any) to each movie.
- */
 export async function fetchMoviesWithTrailers() {
   const data = await fetchPopularMovies();
   const movies = data.results;
 
-  const moviesWithTrailers = await Promise.all(
-    movies.map(async (movie: any) => {
-      const videosData = await fetchMovieVideos(movie.id);
-      const trailers = videosData.results.filter(
-        (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
-      );
-      return {
-        ...movie,
-        trailerKey: trailers.length > 0 ? trailers[0].key : null,
-      };
-    })
-  );
+const moviesWithTrailers = await Promise.all(
+  movies.map(async (movie: any) => {
+    const videosData = await fetchMovieVideos(movie.id);
 
-  return moviesWithTrailers;
+    // Προσπάθησε να βρεις πρώτα το επίσημο trailer
+    let trailer = videosData.results.find(
+      (video: any) =>
+        video.type === 'Trailer' &&
+        video.site === 'YouTube' &&
+        video.official === true
+    );
+
+    // Αν δεν υπάρχει official, πάρε οποιοδήποτε YouTube trailer
+    if (!trailer) {
+      trailer = videosData.results.find(
+        (video: any) =>
+          video.type === 'Trailer' &&
+          video.site === 'YouTube'
+      );
+    }
+
+    return {
+      ...movie,
+      trailerKey: trailer ? trailer.key : null,
+    };
+  })
+);
+
+return moviesWithTrailers;
+
 }
+
+export const fetchMovieCredits = async (movieId: number) => {
+  const response = await fetch(
+    `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch credits');
+  }
+  return response.json();
+};
