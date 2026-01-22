@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchMovieDetails, fetchMovieVideos, fetchMovieCredits} from '../../api';
+import { fetchMovieDetails, fetchMovieVideos, fetchMovieCredits } from '../../api';
 import styles from './MovieDetails.module.css';
 import { Star, Hourglass } from 'lucide-react';
 import { useScreen } from '../../Context/ResponsiveContext';
@@ -25,6 +25,33 @@ const MovieDetails: React.FC = () => {
   const [director, setDirector] = useState<string | null>(null);
   const [cast, setCast] = useState<string[]>([]);
 
+  const [seeding, setSeeding] = useState(false);
+  const [seedError, setSeedError] = useState<string | null>(null);
+  const [seedSuccess, setSeedSuccess] = useState<string | null>(null);
+
+  async function seedShows(movieId: number) {
+    const response = await fetch(`http://localhost:4000/api/seed/${movieId}`, {
+      method: 'POST',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to seed shows');
+    }
+    return await response.json();
+  }
+
+  const handleSeedClick = async () => {
+    setSeeding(true);
+    setSeedError(null);
+    setSeedSuccess(null);
+    try {
+      await seedShows(movie!.id);
+      setSeedSuccess('Οι προβολές δημιουργήθηκαν επιτυχώς!');
+    } catch (err) {
+      setSeedError('Σφάλμα κατά τη δημιουργία προβολών.');
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -36,7 +63,7 @@ const MovieDetails: React.FC = () => {
         const director = creditsData.crew.find((person: any) => person.job === 'Director');
         const topCast = creditsData.cast.slice(0, 5).map((actor: any) => actor.name);
         const trailer = videoData.results.find(
-        (vid: any) => vid.type === 'Trailer' && vid.site === 'YouTube'
+          (vid: any) => vid.type === 'Trailer' && vid.site === 'YouTube'
         );
         setMovie(movieData);
         setDirector(director ? director.name : null);
@@ -81,16 +108,16 @@ const MovieDetails: React.FC = () => {
             <strong>Genres:</strong> {movie.genres.map(g => g.name).join(', ')}
           </p>
           {director && (
-          <p>
-          <strong>Director:</strong> {director}
-         </p>
-        )}
+            <p>
+              <strong>Director:</strong> {director}
+            </p>
+          )}
 
-         {cast.length > 0 && (
-         <p>
-         <strong>Αctors:</strong> {cast.join(', ')}
-         </p>
-         )}
+          {cast.length > 0 && (
+            <p>
+              <strong>Actors:</strong> {cast.join(', ')}
+            </p>
+          )}
           <p className={styles.iconText}>
             <Hourglass
               color="#FFD700"
@@ -105,7 +132,7 @@ const MovieDetails: React.FC = () => {
               size={isMobile ? 16 : 18}
               className={styles.icon}
             />
-            <strong>Rating:</strong> {movie.vote_average.toFixed(2)}/10
+            <strong>Rating:</strong> {movie.vote_average.toFixed(1)}
           </p>
           {trailerKey && (
             <div className={styles.trailer}>
@@ -122,41 +149,68 @@ const MovieDetails: React.FC = () => {
           )}
         </div>
       </div>
-<div className={styles.buttonGroup}>
-  <h3 className={styles.cinemaTitle}>Προβολές</h3>
-  
-  <div className={styles.cinemaOption}>
-    <div className={styles.cinemaInfo}>
-      <span className={styles.cinemaLabel}>Cinema</span>
-      <h4 className={styles.cinemaName}>Star Avenue</h4>
-      <span className={styles.cinemaLocation}>Los Angeles</span>
-    </div>
-    <a
-      href={`/book/StarAvenue/${movie.id}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.redirectButton}
-    >
-      Αγοράστε Εισιτήριο
-    </a>
-  </div>
 
-  <div className={styles.cinemaOption}>
-    <div className={styles.cinemaInfo}>
-      <span className={styles.cinemaLabel}>Cinema</span>
-      <h4 className={styles.cinemaName}>Cinema Blvd</h4>
-      <span className={styles.cinemaLocation}>New York</span>
-    </div>
-    <a
-      href={`/book/CinemaBlvd/${movie.id}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.redirectButton}
-    >
-      Αγοράστε Εισιτήριο
-    </a>
-  </div>
-</div>
+      <div className={styles.buttonGroup}>
+        <h3 className={styles.cinemaTitle}>Προβολές</h3>
+
+        <div className={styles.cinemaOption}>
+          <div className={styles.cinemaInfo}>
+            <span className={styles.cinemaLabel}>Cinema</span>
+            <h4 className={styles.cinemaName}>Star Avenue</h4>
+            <span className={styles.cinemaLocation}>Los Angeles</span>
+          </div>
+          <a
+            href={`/book/StarAvenue/${movie.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.redirectButton}
+          >
+            Αγοράστε Εισιτήριο
+          </a>
+        </div>
+
+        <div className={styles.cinemaOption}>
+          <div className={styles.cinemaInfo}>
+            <span className={styles.cinemaLabel}>Cinema</span>
+            <h4 className={styles.cinemaName}>Cinema Blvd</h4>
+            <span className={styles.cinemaLocation}>New York</span>
+          </div>
+          <a
+            href={`/book/CinemaBlvd/${movie.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.redirectButton}
+          >
+            Αγοράστε Εισιτήριο
+          </a>
+        </div>
+
+        {/* Εδώ προσθέτουμε το κουμπί για δημιουργία προβολών */}
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <button
+            onClick={handleSeedClick}
+            disabled={seeding}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              cursor: seeding ? 'not-allowed' : 'pointer',
+              backgroundColor: seeding ? '#999' : '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+            }}
+          >
+            {seeding ? 'Γίνεται δημιουργία...' : 'Δημιουργία Προβολών'}
+          </button>
+
+          {seedError && (
+            <p style={{ color: 'red', marginTop: '10px' }}>{seedError}</p>
+          )}
+          {seedSuccess && (
+            <p style={{ color: 'green', marginTop: '10px' }}>{seedSuccess}</p>
+          )}
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useResponsive } from './hooks/useResponsive'; // ✅ correct
+// import { useResponsive } from './hooks/useResponsive'; //
 import { ResponsiveProvider } from './Context/ResponsiveContext';
 import Sidebar from './components/Sidebar/Sidebar';
 import Home from './pages/Home/Home';
@@ -26,7 +26,7 @@ import BookingPage from './pages/book/BookingPage';
               <Route path="/" element={<Home />} />
               <Route path="/movies" element={<Movies />} />
               <Route path="/movie/:id" element={<MovieDetails />} />
-              <Route path="/ShowIventInformation/:cinema/:movieId" element={<BookingPage />} />
+              <Route path="/book/:cinemaName/:movieId" element={<BookingPage />} />
             </Routes>
           </div>
         </div>

@@ -13,8 +13,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    
   },
-  "include": ["src"],
+    "ts-node": {
+    "esm": false
+  },
+  "include": ["src", "firebaseScripts"],
   "exclude": ["node_modules"]
 }
