@@ -1,0 +1,642 @@
+.bookingBackground {
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f1f1;
+  min-height: 100vh;
+}
+
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #00bcd4;
+  border-right: 4px solid #862c2c;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  color: #00bcd4;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.header {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.backButton {
+  background: transparent;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  color: #00bcd4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.backButton:hover {
+  background: rgba(0, 188, 212, 0.1);
+  border-color: #00bcd4;
+}
+
+.headerTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.headerSubtitle {
+  font-size: 14px;
+  color: #00bcd4;
+  margin-top: 4px;
+}
+
+.movieCard {
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 0.05) 0%,
+    rgba(134, 44, 44, 0.05) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.moviePoster {
+  width: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  flex-shrink: 0;
+}
+
+.movieInfo {
+  flex: 1;
+}
+
+.movieTitle {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.movieMeta {
+  display: flex;
+  gap: 20px;
+  color: #aaaaaa;
+  font-size: 14px;
+}
+
+.movieMeta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cinemaName {
+  font-size: 16px;
+  color: #00bcd4;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.section {
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00bcd4;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.dateGrid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dateButton {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  color: #aaaaaa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 100px;
+}
+
+.dateButton:hover {
+  background: rgba(0, 188, 212, 0.08);
+  border-color: rgba(0, 188, 212, 0.4);
+  color: #f1f1f1;
+}
+
+.dateButton.selected {
+  background: rgba(0, 188, 212, 0.15);
+  border-color: #00bcd4;
+  color: #00bcd4;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
+}
+
+.dateLabel {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dateValue {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.showsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.showCard {
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 0.05) 0%,
+    rgba(134, 44, 44, 0.05) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.15);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.showCard:hover {
+  border-color: rgba(0, 188, 212, 0.4);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.1);
+  transform: translateY(-2px);
+}
+
+.showCard.selectedShow {
+  border-color: #00bcd4;
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 0.15) 0%,
+    rgba(134, 44, 44, 0.05) 100%);
+}
+
+.showInfo {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.showTime {
+  font-size: 28px;
+  font-weight: bold;
+  color: #00bcd4;
+}
+
+.showHall {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.showSeats {
+  font-size: 13px;
+  color: #aaaaaa;
+  margin-top: 4px;
+}
+
+.selectButton {
+  padding: 10px 24px;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 0.8) 0%,
+    rgba(0, 188, 212, 0.6) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.selectButton:hover {
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 1) 0%,
+    rgba(0, 151, 167, 1) 100%);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+  transform: translateY(-1px);
+}
+
+.selectButton:disabled {
+  background: rgba(100, 100, 100, 0.3);
+  border-color: rgba(100, 100, 100, 0.3);
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Summary */
+.summary {
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  background: linear-gradient(135deg,
+    rgba(0, 188, 212, 0.1) 0%,
+    rgba(134, 44, 44, 0.1) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.4);
+  border-radius: 16px;
+  padding: 24px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.summaryTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00bcd4;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.summaryDetails {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryLabel {
+  font-size: 12px;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.summaryValue {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90vw;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00bcd4;
+}
+
+.modalClose {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Screen */
+.screenWrapper {
+  perspective: 300px;
+  margin-bottom: 10px;
+}
+
+.screen {
+  background: linear-gradient(180deg, rgba(0, 188, 212, 0.6) 0%, rgba(0, 188, 212, 0.1) 100%);
+  height: 10px;
+  border-radius: 50%;
+  transform: rotateX(-10deg);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+}
+
+.screenLabel {
+  text-align: center;
+  font-size: 11px;
+  color: #aaaaaa;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Seats */
+.seatsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 24px;
+  perspective: 800px;
+}
+
+.seatRow {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  transform-origin: top center;
+}
+
+.rowLabel {
+  font-size: 11px;
+  color: #555;
+  width: 18px;
+  text-align: right;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.aisle {
+  width: 20px;
+  flex-shrink: 0;
+}
+
+/* Seat icon - cinema seat shape */
+.seat {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px 4px 2px 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.seat svg {
+  width: 18px;
+  height: 18px;
+}
+
+.seat.available {
+  background: rgba(0, 188, 212, 0.2);
+  border: 1px solid rgba(0, 188, 212, 0.4);
+  color: rgba(0, 188, 212, 0.7);
+}
+
+.seat.available:hover {
+  background: rgba(0, 188, 212, 0.5);
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
+}
+
+.seat.selected {
+  background: #00bcd4;
+  border: 1px solid #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
+  transform: scale(1.15);
+}
+
+.seat.taken {
+  background: rgba(134, 44, 44, 0.3);
+  border: 1px solid rgba(134, 44, 44, 0.4);
+  color: rgba(134, 44, 44, 0.5);
+  cursor: not-allowed;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #aaaaaa;
+}
+
+.legendSeat {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.legendSeat.available {
+  background: rgba(0, 188, 212, 0.2);
+  border: 1px solid rgba(0, 188, 212, 0.4);
+}
+
+.legendSeat.selected {
+  background: #00bcd4;
+  border: 1px solid #00e5ff;
+}
+
+.legendSeat.taken {
+  background: rgba(134, 44, 44, 0.3);
+  border: 1px solid rgba(134, 44, 44, 0.4);
+}
+
+/* Confirm */
+.confirmButton {
+  width: 100%;
+  padding: 14px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.8) 0%, rgba(0, 188, 212, 0.6) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.confirmButton:hover {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 1) 0%, rgba(0, 151, 167, 1) 100%);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+}
+
+.confirmButton:disabled {
+  background: rgba(100, 100, 100, 0.3);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.bookingError {
+  color: #ff7070;
+  font-size: 14px;
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+.rewardCodeBox {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 16px;
+  padding: 13px;
+  border: 1px solid rgba(255, 215, 0, .35);
+  border-radius: 10px;
+  background: rgba(255, 215, 0, .05);
+}
+
+.rewardCodeBox label { color: #ffd700; font-weight: 600; font-size: 13px; }
+.rewardCodeBox input { padding: 10px; border: 1px solid rgba(0, 188, 212, .35); border-radius: 8px; color: #fff; background: rgba(0,0,0,.25); text-transform: uppercase; }
+.rewardCodeBox span { color: #aaa; font-size: 11px; }
+
+.achievementToast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1100;
+  min-width: 240px;
+  padding: 16px 38px 16px 18px;
+  border: 1px solid #ffd700;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2a2105, #102627);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.achievementToast strong { color: #ffd700; }
+.achievementToast span { font-size: 13px; }
+.achievementToast button { position: absolute; right: 9px; top: 8px; border: 0; background: transparent; color: #fff; font-size: 20px; cursor: pointer; }
+
+@media (max-width: 600px) {
+  .movieCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .seat {
+    width: 20px;
+    height: 20px;
+  }
+
+  .seat svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .aisle {
+    width: 12px;
+  }
+
+  .summaryDetails {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

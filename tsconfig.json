@@ -9,14 +9,14 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    
+    "jsx": "react-jsx"
   },
-    "ts-node": {
+  "ts-node": {
     "esm": false
   },
   "include": ["src", "firebaseScripts"],

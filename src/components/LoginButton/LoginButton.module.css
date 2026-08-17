@@ -1,0 +1,53 @@
+.wrapper {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userEmail {
+  color: #00bcd4;
+  font-size: 13px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.loginButton {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.8) 0%, rgba(0, 188, 212, 0.6) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.loginButton:hover {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 1) 0%, rgba(0, 151, 167, 1) 100%);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+}
+
+.logoutButton {
+  background: transparent;
+  border: 1px solid rgba(134, 44, 44, 0.5);
+  color: #ff5252;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.logoutButton:hover {
+  background: rgba(134, 44, 44, 0.1);
+  border-color: #ff5252;
+}

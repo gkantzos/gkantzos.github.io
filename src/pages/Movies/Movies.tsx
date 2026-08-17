@@ -4,6 +4,8 @@ import Cards from '../../components/Cards/Cards';
 import styles from './Movies.module.css';
 import { useScreen } from '../../Context/ResponsiveContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
+import AuthModal from '../../components/Auth/AuthModal';
 
 interface Movie {
   id: number;
@@ -40,6 +42,12 @@ const Movies: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const { isWide } = useScreen();
   const navigate = useNavigate();
+  const { isLoggedIn, token } = useAuth();
+  const [search, setSearch] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('all');
+  const [favoriteMovieIds, setFavoriteMovieIds] = useState<number[]>([]);
+  const [favoriteMessage, setFavoriteMessage] = useState('');
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     fetchPopularMovies()
@@ -63,9 +71,36 @@ const Movies: React.FC = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (!token) { setFavoriteMovieIds([]); return; }
+    fetch('http://localhost:4000/api/auth/favorites', { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.json())
+      .then(data => setFavoriteMovieIds(data.favoriteMovieIds || []))
+      .catch(() => setFavoriteMovieIds([]));
+  }, [token]);
+
   const handleCardClick = (id: number) => {
     navigate(`/movie/${id}`);
   };
+
+  const toggleFavorite = async (id: number) => {
+    if (!isLoggedIn || !token) { setShowAuth(true); return; }
+    const isFavorite = favoriteMovieIds.includes(id);
+    const res = await fetch(`http://localhost:4000/api/auth/favorites/${id}`, {
+      method: isFavorite ? 'DELETE' : 'POST',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (!res.ok) { setFavoriteMessage(data.error || 'Σφάλμα στα αγαπημένα.'); return; }
+    setFavoriteMovieIds(data.favoriteMovieIds);
+    setFavoriteMessage('');
+  };
+
+  const genres = Array.from(new Set(movies.flatMap(movie => movie.genre_names))).sort();
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(search.toLowerCase()) &&
+    (selectedGenre === 'all' || movie.genre_names.includes(selectedGenre))
+  );
 
   return (
     <section className={styles.background}>
@@ -75,13 +110,20 @@ const Movies: React.FC = () => {
           <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>
         </div>
 
+        <div className={styles.filters}>
+          <input value={search} onChange={event => setSearch(event.target.value)} placeholder="Αναζήτηση ταινίας..." />
+          <select value={selectedGenre} onChange={event => setSelectedGenre(event.target.value)}><option value="all">Όλα τα είδη</option>{genres.map(genre => <option key={genre} value={genre}>{genre}</option>)}</select>
+        </div>
+        {favoriteMessage && <p className={styles.favoriteMessage}>{favoriteMessage}</p>}
+
         <div>
-          {movies.length > 0 ? (
-            <Cards movies={movies} onCardClick={handleCardClick} />
+          {filteredMovies.length > 0 ? (
+            <Cards movies={filteredMovies} onCardClick={handleCardClick} favoriteMovieIds={favoriteMovieIds} onToggleFavorite={toggleFavorite} />
           ) : (
-            <div className={styles.noMovies}>No movies available</div>
+            <div className={styles.noMovies}>Δεν βρέθηκαν ταινίες</div>
           )}
         </div>
+        {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ import { ReactComponent as MovieIcon } from '../../assets/video-camera-svgrepo-c
 import styles from './Sidebar.module.css';
 import LogoImage from '../../assets/moviesite logo.png';
 import { useScreen } from '../../Context/ResponsiveContext';
+import { Award, Heart, Ticket } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -46,6 +47,28 @@ const Sidebar: React.FC = () => {
           >
             <MovieIcon className={styles.icon} />
             {showLabels && <span className={styles.label}>Movies</span>}
+          </Link>
+        </li>
+        <li className={location.pathname.startsWith('/achievements') ? styles.active : ''}>
+          <Link
+            to="/achievements"
+            className={styles.navLink}
+            title={!showLabels ? 'Achievements' : undefined}
+          >
+            <Award className={styles.icon} />
+            {showLabels && <span className={styles.label}>Achievements</span>}
+          </Link>
+        </li>
+        <li className={location.pathname.startsWith('/my-bookings') ? styles.active : ''}>
+          <Link to="/my-bookings" className={styles.navLink} title={!showLabels ? 'My Bookings' : undefined}>
+            <Ticket className={styles.icon} />
+            {showLabels && <span className={styles.label}>My Bookings</span>}
+          </Link>
+        </li>
+        <li className={location.pathname.startsWith('/favorites') ? styles.active : ''}>
+          <Link to="/favorites" className={styles.navLink} title={!showLabels ? 'Favorites' : undefined}>
+            <Heart className={styles.icon} />
+            {showLabels && <span className={styles.label}>Favorites</span>}
           </Link>
         </li>
       </ul>

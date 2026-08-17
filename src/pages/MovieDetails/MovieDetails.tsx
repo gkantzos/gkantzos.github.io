@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { fetchMovieDetails, fetchMovieVideos, fetchMovieCredits } from '../../api';
 import styles from './MovieDetails.module.css';
-import { Star, Hourglass } from 'lucide-react';
+import { Star, Hourglass, Heart } from 'lucide-react';
 import { useScreen } from '../../Context/ResponsiveContext';
+import { useAuth } from '../../Context/AuthContext';
+import AuthModal from '../../components/Auth/AuthModal';
 
 interface MovieDetailsType {
   id: number;
@@ -18,40 +20,17 @@ interface MovieDetailsType {
 
 const MovieDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { isWide, isMobile } = useScreen();
   const [director, setDirector] = useState<string | null>(null);
   const [cast, setCast] = useState<string[]>([]);
-
-  const [seeding, setSeeding] = useState(false);
-  const [seedError, setSeedError] = useState<string | null>(null);
-  const [seedSuccess, setSeedSuccess] = useState<string | null>(null);
-
-  async function seedShows(movieId: number) {
-    const response = await fetch(`http://localhost:4000/api/seed/${movieId}`, {
-      method: 'POST',
-    });
-    if (!response.ok) {
-      throw new Error('Failed to seed shows');
-    }
-    return await response.json();
-  }
-
-  const handleSeedClick = async () => {
-    setSeeding(true);
-    setSeedError(null);
-    setSeedSuccess(null);
-    try {
-      await seedShows(movie!.id);
-      setSeedSuccess('Οι προβολές δημιουργήθηκαν επιτυχώς!');
-    } catch (err) {
-      setSeedError('Σφάλμα κατά τη δημιουργία προβολών.');
-    } finally {
-      setSeeding(false);
-    }
-  };
+  const { isLoggedIn, token } = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteMessage, setFavoriteMessage] = useState('');
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -69,21 +48,58 @@ const MovieDetails: React.FC = () => {
         setDirector(director ? director.name : null);
         setCast(topCast);
         setTrailerKey(trailer ? trailer.key : null);
+
+        // ✅ Αυτόματο seed
+        fetch(`http://localhost:4000/api/shows/seed/${movieData.id}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ releaseDate: movieData.release_date })
+        });
+
       } catch (error) {
         console.error('Error loading data', error);
       } finally {
-        setLoading(false);
+        setTimeout(() => setLoading(false), 500);
       }
     };
 
     fetchData();
   }, [id]);
 
-  if (loading) return <div className={styles.message}>Loading...</div>;
+  useEffect(() => {
+    if (!token || !id) { setIsFavorite(false); return; }
+    fetch('http://localhost:4000/api/auth/favorites', { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.json())
+      .then(data => setIsFavorite((data.favoriteMovieIds || []).includes(Number(id))))
+      .catch(() => setIsFavorite(false));
+  }, [id, token]);
+
+  const toggleFavorite = async () => {
+    if (!movie) return;
+    if (!isLoggedIn || !token) { setShowAuth(true); return; }
+    const res = await fetch(`http://localhost:4000/api/auth/favorites/${movie.id}`, {
+      method: isFavorite ? 'DELETE' : 'POST',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (!res.ok) { setFavoriteMessage(data.error || 'Σφάλμα στα αγαπημένα.'); return; }
+    setIsFavorite(data.favoriteMovieIds.includes(movie.id));
+    setFavoriteMessage('');
+  };
+
+  if (loading) return (
+    <div className={styles.loadingContainer}>
+      <div className={styles.spinner} />
+      <p className={styles.loadingText}>Loading...</p>
+    </div>
+  );
   if (!movie) return <div className={styles.message}>Movie not found.</div>;
 
   return (
     <section className={styles.background}>
+      <button className={styles.backButton} onClick={() => navigate(-1)}>
+        ← Πίσω
+      </button>
       <div
         className={`${styles.container} ${isWide ? styles.row : styles.column} ${
           isMobile ? styles.alignCenter : styles.alignStart
@@ -95,6 +111,11 @@ const MovieDetails: React.FC = () => {
             alt={movie.title}
             className={styles.poster}
           />
+          <button className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ''}`} onClick={toggleFavorite}>
+            <Heart size={18} fill={isFavorite ? 'currentColor' : 'none'} />
+            {isFavorite ? 'Στα αγαπημένα' : 'Προσθήκη στα αγαπημένα'}
+          </button>
+          {favoriteMessage && <p className={styles.favoriteMessage}>{favoriteMessage}</p>}
           <h2>{movie.title}</h2>
         </div>
         <div className={styles.rightColumn}>
@@ -112,7 +133,6 @@ const MovieDetails: React.FC = () => {
               <strong>Director:</strong> {director}
             </p>
           )}
-
           {cast.length > 0 && (
             <p>
               <strong>Actors:</strong> {cast.join(', ')}
@@ -149,7 +169,6 @@ const MovieDetails: React.FC = () => {
           )}
         </div>
       </div>
-
       <div className={styles.buttonGroup}>
         <h3 className={styles.cinemaTitle}>Προβολές</h3>
 
@@ -159,14 +178,12 @@ const MovieDetails: React.FC = () => {
             <h4 className={styles.cinemaName}>Star Avenue</h4>
             <span className={styles.cinemaLocation}>Los Angeles</span>
           </div>
-          <a
-            href={`/book/StarAvenue/${movie.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`/book/StarAvenue/${movie.id}`}
             className={styles.redirectButton}
           >
             Αγοράστε Εισιτήριο
-          </a>
+          </Link>
         </div>
 
         <div className={styles.cinemaOption}>
@@ -175,42 +192,15 @@ const MovieDetails: React.FC = () => {
             <h4 className={styles.cinemaName}>Cinema Blvd</h4>
             <span className={styles.cinemaLocation}>New York</span>
           </div>
-          <a
-            href={`/book/CinemaBlvd/${movie.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`/book/CinemaBlvd/${movie.id}`}
             className={styles.redirectButton}
           >
             Αγοράστε Εισιτήριο
-          </a>
-        </div>
-
-        {/* Εδώ προσθέτουμε το κουμπί για δημιουργία προβολών */}
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <button
-            onClick={handleSeedClick}
-            disabled={seeding}
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: seeding ? 'not-allowed' : 'pointer',
-              backgroundColor: seeding ? '#999' : '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-            }}
-          >
-            {seeding ? 'Γίνεται δημιουργία...' : 'Δημιουργία Προβολών'}
-          </button>
-
-          {seedError && (
-            <p style={{ color: 'red', marginTop: '10px' }}>{seedError}</p>
-          )}
-          {seedSuccess && (
-            <p style={{ color: 'green', marginTop: '10px' }}>{seedSuccess}</p>
-          )}
+          </Link>
         </div>
       </div>
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
     </section>
   );
 };

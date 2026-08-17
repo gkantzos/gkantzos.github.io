@@ -59,6 +59,9 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
 
+.favoriteButton { margin-top:14px; display:flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border:1px solid rgba(0,188,212,.5); border-radius:22px; background:rgba(7,16,27,.72); color:#96eef7; cursor:pointer; font-family:'Poppins','Segoe UI',sans-serif; transition:all .2s ease; }
+.favoriteButton:hover { background:#00bcd4; color:#071314; transform:translateY(-1px); }.favoriteActive { color:#ff6575; border-color:#ff6575; background:rgba(134,44,44,.3); }.favoriteActive:hover { color:#fff; background:#862c2c; }.favoriteMessage { color:#ff9da8; font-size:12px; text-align:center; margin:8px 0 0!important; }
+
 .leftColumn h2 {
   margin-top: 15px;
   font-size: 30px;
@@ -263,4 +266,66 @@
   border-color: rgba(0, 188, 212, 0.6);
   box-shadow: 0 6px 25px rgba(0, 188, 212, 0.4);
   transform: translateY(-1px);
+}
+
+/* Loading */
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: 
+    radial-gradient(ellipse at top left, rgba(0, 188, 212, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(134, 44, 44, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0b0b 50%, #0b1a1a 100%);
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #00bcd4;
+  border-right: 4px solid #862c2c;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  color: #00bcd4;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.backButton {
+  background: transparent;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  color: #00bcd4;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 10px 30px;
+}
+
+.backButton:hover {
+  background: rgba(0, 188, 212, 0.1);
+  border-color: #00bcd4;
 }

@@ -4,6 +4,8 @@ import { fetchPopularMovies, fetchUpcomingMovies } from '../../api';
 import Cards from '../../components/Cards/Cards';
 import { useNavigate } from 'react-router-dom';
 import { useScreen } from '../../Context/ResponsiveContext';
+import { useAuth } from '../../Context/AuthContext';
+import AuthModal from '../../components/Auth/AuthModal';
 
 const Home: React.FC = () => {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
@@ -12,11 +14,22 @@ const Home: React.FC = () => {
   const [numMoviesToShow, setNumMoviesToShow] = useState(6);
   const navigate = useNavigate();
   const { isMobile, isTablet, isDesktop, isUltrawide, isWide } = useScreen();
+  const { isLoggedIn, token } = useAuth();
+  const [favoriteMovieIds, setFavoriteMovieIds] = useState<number[]>([]);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     fetchPopularMovies().then(data => setPopularMovies(data.results || []));
     fetchUpcomingMovies().then(data => setUpcomingMovies(data.results || []));
   }, []);
+
+  useEffect(() => {
+    if (!token) { setFavoriteMovieIds([]); return; }
+    fetch('http://localhost:4000/api/auth/favorites', { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => res.json())
+      .then(data => setFavoriteMovieIds(data.favoriteMovieIds || []))
+      .catch(() => setFavoriteMovieIds([]));
+  }, [token]);
 
   // Αρχικός αριθμός ταινιών που θα εμφανίζονται, ανάλογα με το μέγεθος οθόνης
   const getInitialMoviesCount = () => {
@@ -42,6 +55,17 @@ const Home: React.FC = () => {
   const handleShowMore = () => {
     const increment = isMobile ? 4 : isTablet ? 4 : isDesktop ? 4 : 6;
     setNumMoviesToShow(prev => prev + increment);
+  };
+
+  const toggleFavorite = async (id: number) => {
+    if (!isLoggedIn || !token) { setShowAuth(true); return; }
+    const isFavorite = favoriteMovieIds.includes(id);
+    const res = await fetch(`http://localhost:4000/api/auth/favorites/${id}`, {
+      method: isFavorite ? 'DELETE' : 'POST',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (res.ok) setFavoriteMovieIds(data.favoriteMovieIds || []);
   };
 
   return (
@@ -97,7 +121,12 @@ const Home: React.FC = () => {
           isMobile ? styles.verticalList : styles.horizontalGrid
         }`}
       >
-        <Cards movies={displayedMovies} onCardClick={(id) => navigate(`/movie/${id}`)} />
+        <Cards
+          movies={displayedMovies}
+          onCardClick={(id) => navigate(`/movie/${id}`)}
+          favoriteMovieIds={favoriteMovieIds}
+          onToggleFavorite={toggleFavorite}
+        />
       </div>
 
       {/* Κουμπί LOAD MORE αν υπάρχουν ακόμα ταινίες */}
@@ -109,6 +138,7 @@ const Home: React.FC = () => {
           </button>
         </div>
       )}
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
     </section>
   );
 };

@@ -60,7 +60,11 @@ body {
   height: 480px;
   width: 100%;
   min-width: 250px;
+  position: relative;
 }
+
+.favoriteButton { position:absolute; top:13px; right:13px; z-index:3; width:38px; height:38px; display:grid; place-items:center; border:1px solid rgba(0,188,212,.55); border-radius:50%; background:rgba(7,16,27,.8); color:#8de7f1; cursor:pointer; box-shadow:0 0 12px rgba(0,188,212,.2); transition:all .2s ease; }
+.favoriteButton:hover { color:#fff; background:#00bcd4; transform:scale(1.08); }.favoriteActive { color:#ff6575; border-color:#ff6575; background:rgba(134,44,44,.38); }
 
 /* Responsive card heights */
 @media (min-width: 1920px) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Cards.module.css';
 import { fetchMovieVideos } from '../../api';
 import { useScreen } from '../../Context/ResponsiveContext';
+import { Heart } from 'lucide-react';
 
 interface Movie {
   id: number;
@@ -15,6 +16,8 @@ interface Movie {
 interface CardsProps {
   movies: Movie[];
   onCardClick: (id: number) => void;
+  favoriteMovieIds?: number[];
+  onToggleFavorite?: (id: number) => void;
 }
 
 const truncate = (text: string, maxWords: number) => {
@@ -23,7 +26,7 @@ const truncate = (text: string, maxWords: number) => {
   return words.length <= maxWords ? text : words.slice(0, maxWords).join(' ') + '...';
 };
 
-const Cards: React.FC<CardsProps> = ({ movies, onCardClick }) => {
+const Cards: React.FC<CardsProps> = ({ movies, onCardClick, favoriteMovieIds = [], onToggleFavorite }) => {
   const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
@@ -99,6 +102,16 @@ if (!trailer) {
               </div>
 
               <div className={styles.cardContent}>
+                {onToggleFavorite && (
+                  <button
+                    className={`${styles.favoriteButton} ${favoriteMovieIds.includes(movie.id) ? styles.favoriteActive : ''}`}
+                    onClick={event => { event.stopPropagation(); onToggleFavorite(movie.id); }}
+                    aria-label="Προσθήκη στα αγαπημένα"
+                    title={favoriteMovieIds.includes(movie.id) ? 'Αφαίρεση από αγαπημένα' : 'Προσθήκη στα αγαπημένα'}
+                  >
+                    <Heart size={19} fill={favoriteMovieIds.includes(movie.id) ? 'currentColor' : 'none'} />
+                  </button>
+                )}
                 <p><strong>Description:</strong></p>
                 <p>{truncate(movie.overview, getMaxWords())}</p>
                 <h3>
