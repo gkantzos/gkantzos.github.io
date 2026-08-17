@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Award, Clapperboard, Crown, Film, Gift, Lock, Medal, Popcorn, Sparkles, Star, Ticket, Trophy } from 'lucide-react';
 import { useAuth } from '../../Context/AuthContext';
 import styles from './Achievements.module.css';
@@ -42,7 +42,7 @@ const Achievements: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'achievements' | 'rewards'>('achievements');
 
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     if (!token) return;
     const res = await fetch('http://localhost:4000/api/auth/profile', {
       headers: { Authorization: `Bearer ${token}` }
@@ -50,7 +50,7 @@ const Achievements: React.FC = () => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     setProfile(data);
-  };
+  }, [token]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -58,7 +58,7 @@ const Achievements: React.FC = () => {
       return;
     }
     loadProfile().catch(err => setError(err.message)).finally(() => setLoading(false));
-  }, [isLoggedIn, token]);
+  }, [isLoggedIn, loadProfile]);
 
   const claimReward = async (achievementId: string) => {
     if (!token) return;

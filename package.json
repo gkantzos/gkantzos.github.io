@@ -1,41 +1,21 @@
 {
-  "homepage": "https://gkantzos.github.io",
+  "homepage": "https://gkantzos.github.io/MovieSite",
   "name": "movie-site",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "axios": "^1.10.0",
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "firebase": "^11.9.1",
-    "firebase-admin": "^13.4.0",
     "lucide-react": "^0.511.0",
-    "mysql": "^2.18.1",
-    "nodemon": "^3.1.10",
     "react": "^19.1.0",
-    "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.1",
-    "react-scripts": "5.0.1",
-    "react-slick": "^0.30.3",
-    "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "dev": "nodemon movie-site.js",
-    "seed": "ts-node scripts/seed.ts"
+    "deploy": "gh-pages -d build"
   },
   "proxy": "http://localhost:4000",
   "eslintConfig": {
@@ -57,15 +37,9 @@
     ]
   },
   "devDependencies": {
-    "@types/axios": "^0.9.36",
-    "@types/firebase": "^2.4.32",
-    "@types/node": "^24.0.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/react-router-dom": "^5.3.3",
-    "@types/react-slick": "^0.23.13",
     "gh-pages": "^6.3.0",
-    "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   }
 }

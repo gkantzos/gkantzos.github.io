@@ -15,39 +15,12 @@ interface Star {
 const Starseffect: React.FC = () => {
   const { isMobile, isTablet, isDesktop, isUltrawide, width } = useScreen();
   
-  // Προσαρμόζουμε τον αριθμό των αστεριών ανάλογα με το μέγεθος της οθόνης
-  const getStarsCount = () => {
-    if (isMobile) return Math.floor(width / 12); // ~50-65 stars
-    if (isTablet) return Math.floor(width / 10); // ~75-100 stars
-    if (isDesktop) return Math.floor(width / 8); // ~125-160 stars
-    if (isUltrawide) return Math.floor(width / 12); // ~160-200 stars
-    return 80; // fallback
-  };
-
-  // Προσαρμόζουμε το μέγεθος των αστεριών
-  const getStarSizeRange = () => {
-    if (isMobile) return { min: 0.8, max: 1.5 };
-    if (isTablet) return { min: 1, max: 2 };
-    if (isDesktop) return { min: 1.2, max: 2.5 };
-    if (isUltrawide) return { min: 1.5, max: 3 };
-    return { min: 1, max: 2 };
-  };
-
-  // Προσαρμόζουμε την opacity
-  const getOpacityRange = () => {
-    if (isMobile) return { min: 0.4, max: 0.7 };
-    if (isTablet) return { min: 0.5, max: 0.8 };
-    if (isDesktop) return { min: 0.6, max: 0.9 };
-    if (isUltrawide) return { min: 0.7, max: 1 };
-    return { min: 0.5, max: 0.8 };
-  };
-
   const [stars, setStars] = useState<Star[]>([]);
 
   useEffect(() => {
-    const starsCount = getStarsCount();
-    const sizeRange = getStarSizeRange();
-    const opacityRange = getOpacityRange();
+    const starsCount = isMobile ? Math.floor(width / 12) : isTablet ? Math.floor(width / 10) : isDesktop ? Math.floor(width / 8) : isUltrawide ? Math.floor(width / 12) : 80;
+    const sizeRange = isMobile ? { min: 0.8, max: 1.5 } : isTablet ? { min: 1, max: 2 } : isDesktop ? { min: 1.2, max: 2.5 } : isUltrawide ? { min: 1.5, max: 3 } : { min: 1, max: 2 };
+    const opacityRange = isMobile ? { min: 0.4, max: 0.7 } : isTablet ? { min: 0.5, max: 0.8 } : isDesktop ? { min: 0.6, max: 0.9 } : isUltrawide ? { min: 0.7, max: 1 } : { min: 0.5, max: 0.8 };
     const generatedStars: Star[] = [];
     
     for (let i = 0; i < starsCount; i++) {

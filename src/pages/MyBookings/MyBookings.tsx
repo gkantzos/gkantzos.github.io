@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CalendarDays, MapPin, Ticket, XCircle } from 'lucide-react';
 import { useAuth } from '../../Context/AuthContext';
 import styles from './MyBookings.module.css';
@@ -23,18 +23,18 @@ const MyBookings: React.FC = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const loadBookings = async () => {
+  const loadBookings = useCallback(async () => {
     if (!token) return;
     const res = await fetch('http://localhost:4000/api/bookings', { headers: { Authorization: `Bearer ${token}` } });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     setBookings(data.bookings);
-  };
+  }, [token]);
 
   useEffect(() => {
     if (!isLoggedIn) { setLoading(false); return; }
     loadBookings().catch(error => setMessage(error.message)).finally(() => setLoading(false));
-  }, [isLoggedIn, token]);
+  }, [isLoggedIn, loadBookings]);
 
   const cancelBooking = async (id: string) => {
     if (!token || !window.confirm('Θέλετε σίγουρα να ακυρώσετε την κράτηση;')) return;

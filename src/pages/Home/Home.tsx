@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import { fetchPopularMovies, fetchUpcomingMovies } from '../../api';
 import Cards from '../../components/Cards/Cards';
@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'now' | 'upcoming'>('now');
   const [numMoviesToShow, setNumMoviesToShow] = useState(6);
   const navigate = useNavigate();
-  const { isMobile, isTablet, isDesktop, isUltrawide, isWide } = useScreen();
+  const { isMobile, isTablet, isDesktop, isUltrawide } = useScreen();
   const { isLoggedIn, token } = useAuth();
   const [favoriteMovieIds, setFavoriteMovieIds] = useState<number[]>([]);
   const [showAuth, setShowAuth] = useState(false);
@@ -32,18 +32,18 @@ const Home: React.FC = () => {
   }, [token]);
 
   // Αρχικός αριθμός ταινιών που θα εμφανίζονται, ανάλογα με το μέγεθος οθόνης
-  const getInitialMoviesCount = () => {
+  const getInitialMoviesCount = useCallback(() => {
     if (isMobile) return 4;       // Mobile: αρχικά 2 ταινίες κάθετα
     if (isTablet) return 4;       // Tablet: 6 οριζόντια
     if (isDesktop) return 6;      // Desktop: 8 οριζόντια
     if (isUltrawide) return 6;   // Ultrawide: 12 οριζόντια
     return 6;
-  };
+  }, [isMobile, isTablet, isDesktop, isUltrawide]);
 
   // Ενημερώνουμε το πλήθος εμφάνισης όταν αλλάζει το tab ή το μέγεθος οθόνης
   useEffect(() => {
     setNumMoviesToShow(getInitialMoviesCount());
-  }, [activeTab, isMobile, isTablet, isDesktop, isUltrawide]);
+  }, [activeTab, getInitialMoviesCount]);
 
   // Ταινίες που εμφανίζονται ανάλογα με tab και αριθμό
   const displayedMovies =

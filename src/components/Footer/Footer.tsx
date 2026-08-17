@@ -1,11 +1,8 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styles from './Footer.module.css';
-import { useScreen } from '../../Context/ResponsiveContext';
 
 const Footer: React.FC = () => {
-  const { isWide, isMobile } = useScreen();
-
   return (
     <footer className={styles.footer}>
       <div className={styles.locations}>
