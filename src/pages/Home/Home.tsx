@@ -38,7 +38,7 @@ const Home: React.FC = () => {
     if (isDesktop) return 6;      // Desktop: 8 οριζόντια
     if (isUltrawide) return 6;   // Ultrawide: 12 οριζόντια
     return 6;
-  }, [isMobile, isTablet, isDesktop, isUltrawide]);
+  }, [isUltrawide]);
 
   // Ενημερώνουμε το πλήθος εμφάνισης όταν αλλάζει το tab ή το μέγεθος οθόνης
   useEffect(() => {
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   // Λειτουργία "LOAD MORE"
   const handleShowMore = () => {
-    const increment = isMobile ? 4 : isTablet ? 4 : isDesktop ? 4 : 6;
+    const increment = isUltrawide ? 6 : 4;
     setNumMoviesToShow(prev => prev + increment);
   };
 
@@ -116,11 +116,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Κάρτες ταινιών */}
-      <div
-        className={`${styles.cardsPageGrid} ${
-          isMobile ? styles.verticalList : styles.horizontalGrid
-        }`}
-      >
+      <div className={styles.cardsPageGrid}>
         <Cards
           movies={displayedMovies}
           onCardClick={(id) => navigate(`/movie/${id}`)}

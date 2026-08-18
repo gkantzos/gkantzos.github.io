@@ -9,11 +9,11 @@ import { Award, Heart, Ticket } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  const { isWide, isMobile, isTablet } = useScreen();
+  useScreen();
 
   // Καθορίζουμε αν θα δείχνουμε labels και subtitle
-  const showLabels = isWide && !isTablet;
-  const showSubtitle = isWide && !isMobile && !isTablet;
+  const showLabels = true;
+  const showSubtitle = true;
 
   return (
     <nav className={styles.sidebar}>

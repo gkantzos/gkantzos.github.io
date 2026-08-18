@@ -40,7 +40,7 @@ const genreMap: Record<number, string> = {
 
 const Movies: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const { isWide } = useScreen();
+  useScreen();
   const navigate = useNavigate();
   const { isLoggedIn, token } = useAuth();
   const [search, setSearch] = useState('');
@@ -104,7 +104,7 @@ const Movies: React.FC = () => {
 
   return (
     <section className={styles.background}>
-      <div className={isWide ? styles.containerWide : styles.containerNarrow}>
+      <div className={styles.containerWide}>
         <div className={styles.header}>
           <h1 className={styles.title}>Popular movies</h1>
           <p className={styles.subtitle}>Browse through the trending titles currently playing in cinemas.</p>

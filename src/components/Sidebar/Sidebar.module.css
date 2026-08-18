@@ -1,297 +1,37 @@
 .sidebar {
-  width: 220px;
+  box-sizing: border-box;
+  flex: 0 0 clamp(220px, 14vw, 250px);
+  width: clamp(220px, 14vw, 250px);
+  min-height: 100vh;
+  padding: 0 clamp(16px, 1.25vw, 24px);
   background: linear-gradient(180deg, #121212 0%, #1f1f1f 100%);
-  padding: 0px 20px;
-  box-shadow: 1px 0 1px rgba(0,0,0,0.7);
+  box-shadow: 1px 0 1px rgba(0, 0, 0, .7);
+  color: #fff;
   display: flex;
   flex-direction: column;
-  color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: width 0.3s ease;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
 }
 
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  margin-bottom: 40px;
-  margin-top: -30px; 
-  transition: all 0.3s ease;
-}
+.logo { display:flex; flex-direction:column; align-items:center; margin:-20px 0 38px; text-decoration:none; }
+.logoImage { display:block; width:min(100%, 210px); height:auto; margin:0; }
+.logoSubtitle { margin-top:-20px; color:#ff4d4d; font-size:.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.navList { list-style:none; padding:0; margin:0; flex-grow:1; }
+.navList li { margin-bottom:20px; }
+.navLink { display:flex; align-items:center; min-height:42px; padding:8px 10px; border-radius:6px; color:#ccc; font-size:clamp(1rem, 1vw, 1.2rem); text-decoration:none; transition:background-color .2s ease, color .2s ease; }
+.navLink:hover { background:#00bcd4; color:#121212; }
+.icon { flex-shrink:0; width:24px; height:24px; margin-right:10px; fill:#00bcd4; }
+.navLink:hover .icon, .active .icon { fill:#26c6da; }
+.label { white-space:nowrap; overflow:hidden; }
+.active .navLink { background:#00bcd4; color:#000; font-weight:700; }
 
-.logo:hover {
-  color: #041a1d;
-}
-
-.navList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-}
-
-.navList li {
-  margin-bottom: 25px;
-}
-
-.navLink {
-  display: flex;
-  align-items: center;
-  color: #ccc;
-  text-decoration: none;
-  font-size: 20px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 40px;
-}
-
-.navLink:hover {
-  background-color: #00bcd4;
-  color: #121212;
-}
-
-.icon {
-  fill: #00bcd4;
-  width: 26px;
-  height: 26px;
-  margin-right: 12px;
-  transition: fill 0.3s ease;
-  flex-shrink: 0;
-}
-
-.navLink:hover .icon {
-  fill: #26c6da;
-}
-
-.logoImage {
-  width: 230px;
-  height: auto;
-  display: block;
-  margin: 1 auto;
-  padding: 0px;
-  line-height: 1;
-  margin-bottom: -40px;
-  transition: width 0.3s ease;
-}
-
-.logoSubtitle {
-  background: linear-gradient(90deg, #b22222, #ff4d4d, #a00000);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 4s ease infinite;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0;
-  margin-top: -25px;
-  padding: 0;
-  line-height: 1;
-  transition: opacity 0.3s ease;
-}
-
-.label {
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-.active .navLink {
-  background-color: #00bcd4;
-  color: #000000;
-  font-weight: bold;
-}
-
-.active .icon {
-  fill: #26c6da;
-}
-
-/* Ultrawide screens (1920px+) */
-@media (min-width: 1920px) {
-  .sidebar {
-    width: 260px;
-    padding: 0px 25px;
-  }
-  
-  .logoImage {
-    width: 250px;
-  }
-  
-  .navLink {
-    font-size: 22px;
-    padding: 10px 15px;
-    min-height: 45px;
-  }
-  
-  .icon {
-    width: 28px;
-    height: 28px;
-    margin-right: 15px;
-  }
-  
-  .navList li {
-    margin-bottom: 30px;
-  }
-  
-  .logo {
-    margin-bottom: 50px;
-  }
-}
-
-/* Desktop screens (1024px - 1919px) */
-@media (max-width: 1919px) and (min-width: 1024px) {
-  .sidebar {
-    width: 200px;
-    padding: 0px 15px;
-  }
-
-  .logoImage {
-    width: 200px;
-  }
-  
-  .navLink {
-    font-size: 18px;
-    padding: 7px 10px;
-    min-height: 38px;
-  }
-  
-  .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
-  
-  .navList li {
-    margin-bottom: 20px;
-  }
-}
-
-/* Tablet responsive (768px - 1023px) */
-@media (max-width: 1023px) and (min-width: 768px) {
-  .sidebar {
-    width: 80px;
-    padding: 0px 15px;
-  }
-
-  .logoSubtitle,
-  .label {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .logoImage {
-    width: 60px;
-    margin-bottom: -20px;
-  }
-  
-  .logo {
-    margin-bottom: 25px;
-    margin-top: -20px;
-  }
-  
-  .navLink {
-    justify-content: center;
-    padding: 10px;
-    font-size: 0;
-    min-height: 40px;
-  }
-  
-  .icon {
-    margin-right: 0;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .navList li {
-    margin-bottom: 20px;
-  }
-}
-
-/* Mobile screens (max 767px) */
-@media (max-width: 767px) {
-  .sidebar {
-    width: 70px;
-    padding: 0px 10px;
-  }
-  
-  .logoSubtitle,
-  .label {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
-  
-  .logoImage {
-    width: 50px;
-    margin-bottom: -15px;
-  }
-  
-  .logo {
-    margin-bottom: 20px;
-    margin-top: -15px;
-  }
-  
-  .navLink {
-    justify-content: center;
-    padding: 8px;
-    font-size: 0;
-    min-height: 35px;
-  }
-  
-  .icon {
-    width: 22px;
-    height: 22px;
-    margin-right: 0;
-  }
-  
-  .navList li {
-    margin-bottom: 15px;
-  }
-}
-
-/* Small mobile screens (max 479px) */
-@media (max-width: 479px) {
-  .sidebar {
-    width: 60px;
-    padding: 0px 8px;
-  }
-  
-  .logoImage {
-    width: 40px;
-    margin-bottom: -10px;
-  }
-  
-  .logo {
-    margin-bottom: 15px;
-    margin-top: -10px;
-  }
-  
-  .navLink {
-    padding: 6px;
-    min-height: 30px;
-  }
-  
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .navList li {
-    margin-bottom: 12px;
-  }
+@media (min-width: 2560px) {
+  .sidebar { flex-basis:280px; width:280px; padding:0 26px; }
+  .logo { margin-bottom:48px; }
+  .logoImage { width:230px; }
+  .navList li { margin-bottom:28px; }
+  .navLink { min-height:48px; padding:10px 14px; font-size:1.25rem; }
+  .icon { width:28px; height:28px; margin-right:14px; }
 }

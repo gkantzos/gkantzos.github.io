@@ -14,9 +14,3 @@ export const ResponsiveProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 };
 
 export const useScreen = () => useContext(ResponsiveContext);
-
-// Backward compatibility
-export const useIsWide = () => {
-  const { isWide } = useScreen();
-  return isWide;
-};

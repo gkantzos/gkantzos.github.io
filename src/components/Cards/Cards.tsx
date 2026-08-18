@@ -30,21 +30,16 @@ const Cards: React.FC<CardsProps> = ({ movies, onCardClick, favoriteMovieIds = [
   const [trailers, setTrailers] = useState<{ [key: number]: string }>({});
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
-  const { isMobile, isTablet, isDesktop, isUltrawide } = useScreen();
+  const { isUltrawide } = useScreen();
 
   // Καθορίζουμε το grid class με βάση το screen size
   const getGridClass = () => {
-    if (isMobile) return styles.gridMobile;
-    if (isTablet) return styles.gridTablet;
-    if (isDesktop) return styles.gridDesktop;
     if (isUltrawide) return styles.gridUltrawide;
-    return styles.gridDesktop; // fallback
+    return styles.gridDesktop;
   };
 
   // Καθορίζουμε πόσες λέξεις να δείχνουμε στην περιγραφή
   const getMaxWords = () => {
-    if (isMobile) return 8;
-    if (isTablet) return 12;
     return 15;
   };
 

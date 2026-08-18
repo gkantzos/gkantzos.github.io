@@ -24,7 +24,7 @@ const MovieDetails: React.FC = () => {
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const { isWide, isMobile } = useScreen();
+  useScreen();
   const [director, setDirector] = useState<string | null>(null);
   const [cast, setCast] = useState<string[]>([]);
   const { isLoggedIn, token } = useAuth();
@@ -101,9 +101,7 @@ const MovieDetails: React.FC = () => {
         ← Πίσω
       </button>
       <div
-        className={`${styles.container} ${isWide ? styles.row : styles.column} ${
-          isMobile ? styles.alignCenter : styles.alignStart
-        }`}
+        className={`${styles.container} ${styles.row} ${styles.alignStart}`}
       >
         <div className={styles.leftColumn}>
           <img
@@ -141,7 +139,7 @@ const MovieDetails: React.FC = () => {
           <p className={styles.iconText}>
             <Hourglass
               color="#FFD700"
-              size={isMobile ? 16 : 18}
+              size={18}
               className={styles.icon}
             />
             <strong>Runtime:</strong> {movie.runtime} minutes
@@ -149,7 +147,7 @@ const MovieDetails: React.FC = () => {
           <p className={styles.iconText}>
             <Star
               color="#FFD700"
-              size={isMobile ? 16 : 18}
+              size={18}
               className={styles.icon}
             />
             <strong>Rating:</strong> {movie.vote_average.toFixed(1)}

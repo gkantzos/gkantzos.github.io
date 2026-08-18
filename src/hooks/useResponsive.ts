@@ -4,43 +4,33 @@ import { useState, useEffect } from 'react';
 export interface ScreenSize {
   width: number;
   height: number;
-  isMobile: boolean;
-  isTablet: boolean;
+  isMobile: false;
+  isTablet: false;
   isDesktop: boolean;
   isUltrawide: boolean;
-  isWide: boolean;
 }
 
+const ULTRAWIDE_BREAKPOINT = 2560;
+
+const getScreenSize = (): ScreenSize => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  return {
+    width,
+    height,
+    isMobile: false,
+    isTablet: false,
+    isDesktop: width < ULTRAWIDE_BREAKPOINT,
+    isUltrawide: width >= ULTRAWIDE_BREAKPOINT,
+  };
+};
+
 export function useResponsive(): ScreenSize {
-  const [screenSize, setScreenSize] = useState<ScreenSize>(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    
-    return {
-      width,
-      height,
-      isMobile: width < 768,
-      isTablet: width >= 768 && width < 1024,
-      isDesktop: width >= 1024 && width < 1920,
-      isUltrawide: width >= 1920,
-      isWide: width >= 1024
-    };
-  });
+  const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize);
 
   useEffect(() => {
     function handleResize() {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      
-      setScreenSize({
-        width,
-        height,
-        isMobile: width < 768,
-        isTablet: width >= 768 && width < 1024,
-        isDesktop: width >= 1024 && width < 1920,
-        isUltrawide: width >= 1920,
-        isWide: width >= 1024
-      });
+      setScreenSize(getScreenSize());
     }
 
     window.addEventListener('resize', handleResize);
