@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.5b2b74ae.css",
-    "main.js": "/static/js/main.916987ea.js",
+    "main.css": "/static/css/main.83db414a.css",
+    "main.js": "/static/js/main.b21df9db.js",
     "static/media/moviesite logo.png": "/static/media/moviesite logo.21516221bc7344be00d4.png",
     "static/media/video-camera-svgrepo-com.svg": "/static/media/video-camera-svgrepo-com.c165e8a12d851b5d73dec8e2d9fd8c81.svg",
     "static/media/house-solid.svg": "/static/media/house-solid.388cf359777b512d6659159d8afca98c.svg",
     "index.html": "/index.html",
-    "main.5b2b74ae.css.map": "/static/css/main.5b2b74ae.css.map",
-    "main.916987ea.js.map": "/static/js/main.916987ea.js.map"
+    "main.83db414a.css.map": "/static/css/main.83db414a.css.map",
+    "main.b21df9db.js.map": "/static/js/main.b21df9db.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b2b74ae.css",
-    "static/js/main.916987ea.js"
+    "static/css/main.83db414a.css",
+    "static/js/main.b21df9db.js"
   ]
 }
