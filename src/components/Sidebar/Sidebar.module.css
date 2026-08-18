@@ -2,6 +2,7 @@
   box-sizing: border-box;
   flex: 0 0 clamp(220px, 14vw, 250px);
   width: clamp(220px, 14vw, 250px);
+  min-width: 220px;
   min-height: 100vh;
   padding: 0 clamp(16px, 1.25vw, 24px);
   background: linear-gradient(180deg, #121212 0%, #1f1f1f 100%);
@@ -13,6 +14,7 @@
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  z-index: 10;
 }
 
 .logo { display:flex; flex-direction:column; align-items:center; margin:-20px 0 38px; text-decoration:none; }
@@ -28,7 +30,7 @@
 .active .navLink { background:#00bcd4; color:#000; font-weight:700; }
 
 @media (min-width: 2560px) {
-  .sidebar { flex-basis:280px; width:280px; padding:0 26px; }
+  .sidebar { flex-basis:280px; width:280px; min-width:280px; padding:0 26px; }
   .logo { margin-bottom:48px; }
   .logoImage { width:230px; }
   .navList li { margin-bottom:28px; }

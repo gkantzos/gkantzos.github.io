@@ -24,9 +24,9 @@ const App: React.FC = () => (
           <ScrollToTop />
           <LoginButton />
           <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', flex: 1 }}>
+            <div style={{ display: 'flex', flex: 1, minWidth: 0 }}>
               <Sidebar />
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0, overflowX: 'hidden' }}>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/movies" element={<Movies />} />
